@@ -20,5 +20,5 @@
 >
     {{ $slot }}
     <span x-show="show" x-cloak x-transition.opacity role="tooltip"
-          style="position:absolute;{{ $pos }}z-index:60;white-space:nowrap;padding:5px 9px;font-family:var(--kd-font-sans);font-size:11.5px;font-weight:500;color:var(--kd-on-accent);background:var(--kd-text);border-radius:var(--kd-radius-sm);box-shadow:var(--kd-shadow-md);pointer-events:none;">{{ $text }}</span>
+          style="position:absolute;{{ $pos }}z-index:60;white-space:nowrap;padding:5px 9px;font-family:var(--kd-font-sans);font-size:11.5px;font-weight:500;color:var(--kd-bg);background:var(--kd-text);border-radius:var(--kd-radius-sm);box-shadow:var(--kd-shadow-md);pointer-events:none;">{{ $text }}</span>
 </span>

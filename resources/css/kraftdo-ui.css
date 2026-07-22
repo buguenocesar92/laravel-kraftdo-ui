@@ -61,7 +61,7 @@
     --kd-accent: var(--kd-green);
     --kd-accent-strong: var(--kd-green-dark);
     --kd-accent-soft: #ecfdf5;
-    --kd-on-accent: #ffffff;
+    --kd-on-accent: var(--kd-dark);
 
     --kd-ok-fg: #0f7a5a;
     --kd-ok-bg: #e2f5ee;
@@ -113,7 +113,7 @@
         --kd-accent: var(--kd-green);
         --kd-accent-strong: var(--kd-green-dark);
         --kd-accent-soft: rgba(16, 185, 129, .12);
-        --kd-on-accent: #ffffff;
+        --kd-on-accent: var(--kd-dark);
         --kd-ok-fg: #22c55e;
         --kd-ok-bg: #0d2d1a;
         --kd-ok-border: #166534;
@@ -156,7 +156,7 @@
     --kd-accent: var(--kd-green);
     --kd-accent-strong: var(--kd-green-dark);
     --kd-accent-soft: rgba(16, 185, 129, .12);
-    --kd-on-accent: #ffffff;
+    --kd-on-accent: var(--kd-dark);
     --kd-ok-fg: #22c55e;
     --kd-ok-bg: #0d2d1a;
     --kd-ok-border: #166534;
@@ -196,7 +196,7 @@
     --kd-accent: var(--kd-green);
     --kd-accent-strong: var(--kd-green-dark);
     --kd-accent-soft: #ecfdf5;
-    --kd-on-accent: #ffffff;
+    --kd-on-accent: var(--kd-dark);
     --kd-ok-fg: #0f7a5a;
     --kd-ok-bg: #e2f5ee;
     --kd-ok-border: #0f7a5a;
