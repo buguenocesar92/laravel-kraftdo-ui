@@ -70,6 +70,7 @@
     --kd-warn-bg: #fef3dc;
     --kd-warn-border: #c47a10;
     --kd-danger-fg: #b03030;
+    --kd-on-danger: #ffffff; /* texto sobre el relleno de peligro solido (hover); calculado AA */
     --kd-danger-bg: #fdeaea;
     --kd-danger-border: #b03030;
     --kd-info-fg: #1f5fb0;
@@ -121,6 +122,7 @@
         --kd-warn-bg: #2d1d00;
         --kd-warn-border: #92400e;
         --kd-danger-fg: #ef4444;
+        --kd-on-danger: var(--kd-dark); /* texto sobre el relleno de peligro solido (hover); calculado AA */
         --kd-danger-bg: #2d0d0d;
         --kd-danger-border: #991b1b;
         --kd-info-fg: #3b82f6;
@@ -164,6 +166,7 @@
     --kd-warn-bg: #2d1d00;
     --kd-warn-border: #92400e;
     --kd-danger-fg: #ef4444;
+    --kd-on-danger: var(--kd-dark); /* texto sobre el relleno de peligro solido (hover); calculado AA */
     --kd-danger-bg: #2d0d0d;
     --kd-danger-border: #991b1b;
     --kd-info-fg: #3b82f6;
@@ -204,6 +207,7 @@
     --kd-warn-bg: #fef3dc;
     --kd-warn-border: #c47a10;
     --kd-danger-fg: #b03030;
+    --kd-on-danger: #ffffff; /* texto sobre el relleno de peligro solido (hover); calculado AA */
     --kd-danger-bg: #fdeaea;
     --kd-danger-border: #b03030;
     --kd-info-fg: #1f5fb0;

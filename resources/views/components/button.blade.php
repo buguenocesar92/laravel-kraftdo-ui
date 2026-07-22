@@ -45,6 +45,6 @@
         .kd-btn--subtle:hover { background: var(--kd-surface-3); }
 
         .kd-btn--danger { background: var(--kd-danger-bg); color: var(--kd-danger-fg); border-color: var(--kd-danger-border); }
-        .kd-btn--danger:hover { background: var(--kd-danger-fg); color: #fff; }
+        .kd-btn--danger:hover { background: var(--kd-danger-fg); color: var(--kd-on-danger); }
     </style>
 @endonce
