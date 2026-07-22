@@ -1,9 +1,10 @@
 # laravel-kraftdo-ui
 
-Sistema de diseño y componentes Blade del **ecosistema municipal de Graneros**.
-Centraliza en un paquete lo que hoy está copiado entre sistemas (`feria.css`, `discapacidad.css`):
-un contrato de tokens `--kd-*` con dos temas seleccionables y un set de componentes de
-panel de datos (topbar, KPIs, tabla densa, filtros, badges).
+Sistema de diseño y componentes Blade del **ecosistema KraftDo**. Fork del paquete de
+diseño municipal (`laravel-muni-ui`), retemado a la identidad de marca de KraftDo.
+Centraliza en un paquete lo que antes estaba copiado entre sistemas: un contrato de
+tokens `--kd-*` con dos temas seleccionables y un set de componentes de panel de datos
+(topbar, KPIs, tabla densa, filtros, badges).
 
 ## Filosofía: maquinaria + presets
 
@@ -26,16 +27,16 @@ todo el ecosistema a la vez — no hay que elegir uno:
 | Mecanismo | Para qué |
 |-----------|----------|
 | `<html class="dark">` | **Filament** (su toggle) y Tailwind class-strategy |
-| `<html data-muni-theme="dark">` | Nuestro atributo — congela un tema fijo (feria/disc) |
+| `<html data-kd-theme="dark">` | Nuestro atributo — congela un tema fijo (feria/disc) |
 | `<html data-theme="dark">` | Convención de otras UI / PWA-SPA |
 | `@media (prefers-color-scheme: dark)` | PWA/SPA que sigue el OS (fallback automático) |
 
 **Jerarquía** (de menor a mayor prioridad): light por defecto → dark por preferencia del OS →
-activadores de clase/atributo (ganan sobre el OS) → `data-muni-theme` explícito (override final).
+activadores de clase/atributo (ganan sobre el OS) → `data-kd-theme` explícito (override final).
 
-- Dentro de un **panel Filament**: no pongas `data-muni-theme` — los `<x-kd::*>` siguen
+- Dentro de un **panel Filament**: no pongas `data-kd-theme` — los `<x-kd::*>` siguen
   automáticamente el toggle `.dark` de Filament.
-- Un **sistema con identidad fija** (discapacidad siempre claro): pon `data-muni-theme="light"`
+- Un **sistema con identidad fija** (siempre claro): pon `data-kd-theme="light"`
   y queda inmune al OS y a un `.dark` de un ancestro.
 - Una **PWA que sigue el OS**: no pongas nada — `prefers-color-scheme` decide.
 
@@ -77,14 +78,14 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 ## Uso
 
 ```blade
-<x-kd::app-shell theme="dark" system="Patentes Comerciales" subtitle="Municipalidad de Graneros" status="online">
+<x-kd::app-shell theme="dark" system="Cuentas por Cobrar" subtitle="KraftDo" status="online">
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
         <x-kd::kpi :value="number_format($total, 0, ',', '.')" label="Resultado del filtro" />
         <x-kd::kpi :value="$morosos" label="Morosas" tone="danger" />
         <x-kd::kpi :value="$total - $morosos" label="Al día" tone="ok" />
     </div>
 
-    <x-kd::filter-bar :action="route('patentes')">
+    <x-kd::filter-bar :action="route('cuentas')">
         <x-kd::field label="Buscar"><input name="buscar" value="{{ $filtros['buscar'] ?? '' }}"></x-kd::field>
         <x-kd::field label="Morosidad">
             <select name="morosa"><option value="">Todas</option><option value="SI">Solo morosas</option></select>
@@ -93,9 +94,9 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 
     <x-kd::data-table :columns="['Razón social', 'RUT', 'Tipo', 'Estado']">
         @foreach ($filas as $fila)
-            <tr data-muni-row @class(['muni-row--danger' => $fila['morosa'] === 'SI'])>
+            <tr data-kd-row @class(['kd-row--danger' => $fila['morosa'] === 'SI'])>
                 <td>{{ $fila['razon_social'] }}</td>
-                <td class="muni-num">{{ $fila['rut'] }}</td>
+                <td class="kd-num">{{ $fila['rut'] }}</td>
                 <td>{{ $fila['tipo'] }}</td>
                 <td><x-kd::badge :tone="$fila['morosa'] === 'SI' ? 'danger' : 'ok'">{{ $fila['morosa'] === 'SI' ? 'Morosa' : 'Al día' }}</x-kd::badge></td>
             </tr>
@@ -120,7 +121,7 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 | `<x-kd::segmented>` | `name`, `options` (array), `value` — radios reales sin JS; o slot |
 | `<x-kd::filter-bar>` | `action`, `method`; slots `submitLabel`, `actions` |
 | `<x-kd::field>` | `label`; el control (input/select) va en el slot |
-| `<x-kd::data-table>` | `columns` (array), `empty`; el slot son los `<tr data-muni-row>` |
+| `<x-kd::data-table>` | `columns` (array), `empty`; el slot son los `<tr data-kd-row>` |
 | `<x-kd::pagination>` | `current`, `total`, `url` (closure fn(\$p)), `info` |
 
 ### Interactivos (requieren Alpine 3)
@@ -131,22 +132,22 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 | `<x-kd::dropdown-item>` | `href`, `icon`, `tone` (default/danger) |
 | `<x-kd::modal>` | `title`, `maxWidth`; slots `trigger`, `footer` |
 | `<x-kd::tabs>` | `tabs` (array de labels), `default`; paneles `<x-kd::tab-panel :index>` |
-| `<x-kd::toast-host>` | `position`; colocar UNA vez. Disparar: `$dispatch('muni-toast', {tone, title, message})` |
+| `<x-kd::toast-host>` | `position`; colocar UNA vez. Disparar: `$dispatch('kd-toast', {tone, title, message})` |
 
 ```blade
 {{-- Modal --}}
-<x-kd::modal title="Dar de baja la patente">
+<x-kd::modal title="Dar de baja la cuenta">
     <x-slot:trigger><x-kd::button variant="danger">Dar de baja</x-kd::button></x-slot:trigger>
-    Se marcará <b>{{ $patente->razon_social }}</b> como cesada.
+    Se marcará <b>{{ $cuenta->razon_social }}</b> como cesada.
     <x-slot:footer>
         <x-kd::button variant="ghost" x-on:click="open=false">Cancelar</x-kd::button>
-        <x-kd::button x-on:click="open=false; $dispatch('muni-toast',{tone:'ok',message:'Patente dada de baja'})">Confirmar</x-kd::button>
+        <x-kd::button x-on:click="open=false; $dispatch('kd-toast',{tone:'ok',message:'Cuenta dada de baja'})">Confirmar</x-kd::button>
     </x-slot:footer>
 </x-kd::modal>
 
 {{-- Toast: colocar el host una vez, disparar desde cualquier parte --}}
 <x-kd::toast-host />
-<button x-on:click="$dispatch('muni-toast',{tone:'ok',title:'Guardado',message:'Cambios guardados.'})">Guardar</button>
+<button x-on:click="$dispatch('kd-toast',{tone:'ok',title:'Guardado',message:'Cambios guardados.'})">Guardar</button>
 ```
 
 ### Formularios, navegación y plantillas de página
@@ -177,27 +178,28 @@ con Filament; en apps sin Filament, `npm i alpinejs` y `Alpine.start()`. El CSS 
 la regla `[x-cloak]` para evitar el flash inicial.
 
 **Firma del sistema:** la morosidad no es un badge redondo suelto — una fila
-`<tr data-muni-row class="muni-row--danger">` pinta una franja de estado en el borde
-izquierdo (banda de libro mayor), y los RUT/cifras usan `.muni-num` (mono tabular).
+`<tr data-kd-row class="kd-row--danger">` pinta una franja de estado en el borde
+izquierdo (banda de libro mayor), y los RUT/cifras usan `.kd-num` (mono tabular).
 
-## Demos (`demo/`)
+## Plugin de Filament
 
-Todas self-contained (Alpine inline, sin CDN).
+`Kraftdo\Ui\Filament\KraftdoPanel` viste cualquier panel con el tema de marca (inyecta
+`kraftdo-ui-filament.css` y el degradado sobre la barra superior) y fija la paleta
+primaria/info/success/warning/danger/gray. Requiere `filament/filament` (paquete
+opcional, va en `require-dev`; instálalo también en la app que lo consume).
 
-**Componentes y sistema**
-- `index.html` — panel de datos en ambos temas · `interactive.html` — modal/dropdown/tabs/toasts
-- `showcase.html` — sala de control cívica con consola viva · `templates.html` — galería de pantallas (landing, login, paneles por rol, error)
-- `app.html` — **dashboard de patentes funcional completo** (command palette ⌘K, charts, tabla sortable, drawer, modal, toasts)
+```bash
+php artisan vendor:publish --tag=kraftdo-ui-filament
+```
 
-**Landings novedosas por sistema** — cada una con identidad propia anclada a su mundo
-- `landing-hub.html` — hub del ecosistema (dark mode universal en vivo)
-- `landing-licencias.html` — "la ruta" (carretera en perspectiva, señalética vial)
-- `landing-discapacidad.html` — "accesibilidad como belleza" (controles reales de a11y)
-- `landing-control-acceso.html` — "terminal de vigilancia" (feed biométrico en vivo)
-- `landing-patentes.html` — "el libro de rentas" (sello municipal, cifras que respiran)
+```php
+// En el PanelProvider:
+->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make())
+// o, si el sistema define su propio acento:
+->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make()->conColores(false))
+```
 
 ## Roadmap
 
 - Capa 2: primitivas BlatUI (button/input/dialog…) re-teñidas con estos tokens (requiere Alpine).
-- Tema Filament vía `renderHook(PanelsRenderHook::HEAD_END)` que lee los mismos `--kd-*`.
 - Pipeline v0 → Blade para componentes complejos nuevos.
