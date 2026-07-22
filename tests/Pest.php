@@ -33,17 +33,24 @@ function kdContraste(string $a, string $b): float
  */
 function kdToken(string $css, string $selector, string $token): string
 {
-    $pos = strpos($css, $selector.' {');
-    if ($pos === false) {
-        $pos = strpos($css, $selector.',');
+    // El selector puede aparecer en VARIOS bloques (p. ej. hay dos `:root {`: uno
+    // solo de marca y otro semántico). Se fusionan todos sus cuerpos antes de
+    // buscar el token; leer solo el primero mediría el bloque equivocado sin
+    // lanzar. Un bloque más abajo gana, como en la cascada CSS.
+    $bloques = '';
+    $desde = 0;
+    while (($pos = strpos($css, $selector.' {', $desde)) !== false) {
+        $abre = strpos($css, '{', $pos);
+        $cierra = strpos($css, '}', $abre);
+        $bloques = substr($css, $abre, $cierra - $abre)."\n".$bloques;
+        $desde = $cierra;
     }
-    if ($pos === false) {
+    if ($bloques === '') {
         throw new RuntimeException("No existe el bloque «{$selector}» en el CSS.");
     }
 
-    $abre = strpos($css, '{', $pos);
-    $bloque = substr($css, $abre, strpos($css, '}', $abre) - $abre);
-
+    // Resuelve el valor de un token; si es `var(--otro)`, sigue la indirección
+    // contra todo el CSS (los tokens destino viven en algún `:root`).
     $leer = function (string $donde, string $t) use (&$leer, $css) {
         if (preg_match('/'.preg_quote($t, '/').'\s*:\s*([^;]+);/', $donde, $m) !== 1) {
             return null;
@@ -56,7 +63,9 @@ function kdToken(string $css, string $selector, string $token): string
         return preg_match('/^#[0-9a-f]{6}$/i', $valor) === 1 ? $valor : null;
     };
 
-    $hex = $leer($bloque, $token) ?? $leer($css, $token);
+    // El token DEBE estar en el bloque del selector pedido: sin fallback global
+    // para la búsqueda primaria, o mediría el tema equivocado en silencio.
+    $hex = $leer($bloques, $token);
     if ($hex === null) {
         throw new RuntimeException("El token «{$token}» no resuelve a un hex en «{$selector}».");
     }
