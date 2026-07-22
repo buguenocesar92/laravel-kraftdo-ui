@@ -24,13 +24,6 @@ class KraftdoUiServiceProvider extends ServiceProvider
             __DIR__.'/../resources/css/kraftdo-ui.css' => resource_path('css/vendor/kraftdo-ui.css'),
         ], 'kraftdo-ui-css');
 
-        // Escudo oficial del municipio. `<x-kd::gob-escudo>` lo sirve desde
-        // public/vendor/kraftdo-ui/, así que hay que publicarlo en cada sistema:
-        //   php artisan vendor:publish --tag=kraftdo-ui-images
-        $this->publishes([
-            __DIR__.'/../resources/images' => public_path('vendor/kraftdo-ui'),
-        ], 'kraftdo-ui-images');
-
         // Tema Filament de KraftDo (CSS plano) → public/vendor/kraftdo-ui/filament.css.
         // Se inyecta con un render hook para que los paneles no se vean genéricos:
         //   php artisan vendor:publish --tag=kraftdo-ui-filament --force

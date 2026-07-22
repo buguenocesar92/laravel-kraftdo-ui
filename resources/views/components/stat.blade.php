@@ -32,7 +32,7 @@
     $arrow = $deltaDir === 'up' ? '&#9650;' : ($deltaDir === 'down' ? '&#9660;' : '');
 @endphp
 
-<div class="muni-stat" {{ $attributes->merge(['style' => 'position:relative;padding:16px 18px;background:var(--kd-surface);border:1px solid var(--kd-border);border-radius:var(--kd-radius);box-shadow:var(--kd-shadow);min-width:170px;transition:box-shadow var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease);']) }}>
+<div class="kd-stat" {{ $attributes->merge(['style' => 'position:relative;padding:16px 18px;background:var(--kd-surface);border:1px solid var(--kd-border);border-radius:var(--kd-radius);box-shadow:var(--kd-shadow);min-width:170px;transition:box-shadow var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease);']) }}>
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
         <div style="min-width:0;">
             <div style="font-family:var(--kd-font-mono);font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;line-height:1.05;color:{{ $accent }};">{{ $value }}</div>
@@ -55,5 +55,5 @@
 </div>
 
 @once
-    <style>.muni-stat:hover { box-shadow: var(--kd-shadow-md); transform: translateY(-1px); }</style>
+    <style>.kd-stat:hover { box-shadow: var(--kd-shadow-md); transform: translateY(-1px); }</style>
 @endonce

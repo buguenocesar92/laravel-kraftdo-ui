@@ -22,29 +22,29 @@
 
 <{{ $tag }}
     @if ($href) href="{{ $href }}" @else type="{{ $type }}" @endif
-    {{ $attributes->merge(['class' => 'muni-btn muni-btn--'.$variant, 'style' => $base]) }}
+    {{ $attributes->merge(['class' => 'kd-btn kd-btn--'.$variant, 'style' => $base]) }}
 >
-    @if ($icon)<span class="muni-btn__icon" aria-hidden="true">{!! $icon !!}</span>@endif
+    @if ($icon)<span class="kd-btn__icon" aria-hidden="true">{!! $icon !!}</span>@endif
     {{ $slot }}
 </{{ $tag }}>
 
 @once
     <style>
-        .muni-btn:focus-visible { outline: none; box-shadow: var(--kd-ring); }
-        .muni-btn:active { transform: translateY(1px); }
-        .muni-btn__icon { display: inline-flex; }
-        .muni-btn__icon svg { width: 15px; height: 15px; }
+        .kd-btn:focus-visible { outline: none; box-shadow: var(--kd-ring); }
+        .kd-btn:active { transform: translateY(1px); }
+        .kd-btn__icon { display: inline-flex; }
+        .kd-btn__icon svg { width: 15px; height: 15px; }
 
-        .muni-btn--primary { background: var(--kd-accent); color: var(--kd-on-accent); }
-        .muni-btn--primary:hover { background: var(--kd-accent-strong); box-shadow: var(--kd-shadow); }
+        .kd-btn--primary { background: var(--kd-accent); color: var(--kd-on-accent); }
+        .kd-btn--primary:hover { background: var(--kd-accent-strong); box-shadow: var(--kd-shadow); }
 
-        .muni-btn--ghost { background: transparent; color: var(--kd-text); border-color: var(--kd-border); }
-        .muni-btn--ghost:hover { background: var(--kd-surface-2); border-color: var(--kd-border-2); }
+        .kd-btn--ghost { background: transparent; color: var(--kd-text); border-color: var(--kd-border); }
+        .kd-btn--ghost:hover { background: var(--kd-surface-2); border-color: var(--kd-border-2); }
 
-        .muni-btn--subtle { background: var(--kd-surface-2); color: var(--kd-text); }
-        .muni-btn--subtle:hover { background: var(--kd-surface-3); }
+        .kd-btn--subtle { background: var(--kd-surface-2); color: var(--kd-text); }
+        .kd-btn--subtle:hover { background: var(--kd-surface-3); }
 
-        .muni-btn--danger { background: var(--kd-danger-bg); color: var(--kd-danger-fg); border-color: var(--kd-danger-border); }
-        .muni-btn--danger:hover { background: var(--kd-danger-fg); color: #fff; }
+        .kd-btn--danger { background: var(--kd-danger-bg); color: var(--kd-danger-fg); border-color: var(--kd-danger-border); }
+        .kd-btn--danger:hover { background: var(--kd-danger-fg); color: #fff; }
     </style>
 @endonce

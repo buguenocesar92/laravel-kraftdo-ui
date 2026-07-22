@@ -8,7 +8,7 @@
 ])
 
 <!DOCTYPE html>
-<html lang="es" data-muni-theme="{{ $theme }}">
+<html lang="es" data-kd-theme="{{ $theme }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,21 +17,21 @@
     <style>
         *,*::before,*::after{ box-sizing:border-box; }
         body{ margin:0; min-height:100vh; background:var(--kd-bg); color:var(--kd-text); font-family:var(--kd-font-sans); display:flex; }
-        .muni-ds__col{ flex:1; min-width:0; display:flex; flex-direction:column; }
-        .muni-ds__top{ position:sticky; top:0; z-index:40; height:var(--kd-topbar-h); display:flex; align-items:center; gap:12px; padding:0 18px; background:var(--kd-surface); border-bottom:1px solid var(--kd-border); }
-        .muni-ds__burger{ display:none; padding:6px; border:none; background:transparent; color:var(--kd-text); cursor:pointer; border-radius:var(--kd-radius-sm); }
-        @media (max-width:899px){ .muni-ds__burger{ display:inline-flex; } }
-        .muni-ds__main{ flex:1; padding:24px; max-width:1280px; width:100%; margin:0 auto; }
-        .muni-ds__scrim{ display:none; position:fixed; inset:0; z-index:140; background:rgba(10,14,20,.5); }
-        @media (max-width:899px){ .muni-ds__scrim.on{ display:block; } }
+        .kd-ds__col{ flex:1; min-width:0; display:flex; flex-direction:column; }
+        .kd-ds__top{ position:sticky; top:0; z-index:40; height:var(--kd-topbar-h); display:flex; align-items:center; gap:12px; padding:0 18px; background:var(--kd-surface); border-bottom:1px solid var(--kd-border); }
+        .kd-ds__burger{ display:none; padding:6px; border:none; background:transparent; color:var(--kd-text); cursor:pointer; border-radius:var(--kd-radius-sm); }
+        @media (max-width:899px){ .kd-ds__burger{ display:inline-flex; } }
+        .kd-ds__main{ flex:1; padding:24px; max-width:1280px; width:100%; margin:0 auto; }
+        .kd-ds__scrim{ display:none; position:fixed; inset:0; z-index:140; background:rgba(10,14,20,.5); }
+        @media (max-width:899px){ .kd-ds__scrim.on{ display:block; } }
     </style>
 </head>
 <body>
     {{ $sidebar ?? '' }}
 
-    <div class="muni-ds__col">
-        <header class="muni-ds__top">
-            <button class="muni-ds__burger" @click="window.dispatchEvent(new CustomEvent('muni-sidebar'))" aria-label="Menú">
+    <div class="kd-ds__col">
+        <header class="kd-ds__top">
+            <button class="kd-ds__burger" @click="window.dispatchEvent(new CustomEvent('kd-sidebar'))" aria-label="Menú">
                 <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><path d="M3 6h14M3 10h14M3 14h14" stroke-linecap="round"/></svg>
             </button>
             <div style="display:flex;flex-direction:column;line-height:1.2;min-width:0;">
@@ -46,7 +46,7 @@
             @if ($user)<x-kd::avatar :name="$user" size="md" />@endif
         </header>
 
-        <main class="muni-ds__main">
+        <main class="kd-ds__main">
             {{ $slot }}
         </main>
     </div>

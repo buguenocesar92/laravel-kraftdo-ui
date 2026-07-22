@@ -26,8 +26,8 @@
             {{-- Fondo --}}
             <div
                 x-show="open"
-                x-transition:enter="muni-fade" x-transition:enter-start="muni-fade-0" x-transition:enter-end="muni-fade-1"
-                x-transition:leave="muni-fade" x-transition:leave-start="muni-fade-1" x-transition:leave-end="muni-fade-0"
+                x-transition:enter="kd-fade" x-transition:enter-start="kd-fade-0" x-transition:enter-end="kd-fade-1"
+                x-transition:leave="kd-fade" x-transition:leave-start="kd-fade-1" x-transition:leave-end="kd-fade-0"
                 @click="open = false"
                 style="position:absolute;inset:0;background:rgba(10,14,20,.55);backdrop-filter:blur(2px);"
             ></div>
@@ -35,8 +35,8 @@
             {{-- Panel --}}
             <div
                 x-show="open"
-                x-transition:enter="muni-pop" x-transition:enter-start="muni-pop-0" x-transition:enter-end="muni-pop-1"
-                x-transition:leave="muni-pop" x-transition:leave-start="muni-pop-1" x-transition:leave-end="muni-pop-0"
+                x-transition:enter="kd-pop" x-transition:enter-start="kd-pop-0" x-transition:enter-end="kd-pop-1"
+                x-transition:leave="kd-pop" x-transition:leave-start="kd-pop-1" x-transition:leave-end="kd-pop-0"
                 {{ $attributes->merge([
                     'style' => "position:relative;width:100%;max-width:{$maxWidth};max-height:calc(100vh - 40px);"
                         ."display:flex;flex-direction:column;background:var(--kd-surface);color:var(--kd-text);"
@@ -46,7 +46,7 @@
             >
                 <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--kd-border);">
                     <h2 style="margin:0;font-size:15px;font-weight:700;color:var(--kd-text);">{{ $title }}</h2>
-                    <button type="button" @click="open = false" aria-label="Cerrar" class="muni-modal-x">
+                    <button type="button" @click="open = false" aria-label="Cerrar" class="kd-modal-x">
                         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M5 5l10 10M15 5L5 15" stroke-linecap="round"/></svg>
                     </button>
                 </header>
@@ -67,13 +67,13 @@
 
 @once
     <style>
-        .muni-modal-x { display:inline-flex;padding:6px;border:none;background:transparent;color:var(--kd-muted);border-radius:var(--kd-radius-sm);cursor:pointer;transition:background var(--kd-dur) var(--kd-ease),color var(--kd-dur) var(--kd-ease); }
-        .muni-modal-x:hover { background:var(--kd-surface-3);color:var(--kd-text); }
-        .muni-modal-x:focus-visible { outline:none;box-shadow:var(--kd-ring); }
-        .muni-fade { transition:opacity var(--kd-dur) var(--kd-ease); }
-        .muni-fade-0 { opacity:0; } .muni-fade-1 { opacity:1; }
-        .muni-pop { transition:opacity var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease); }
-        .muni-pop-0 { opacity:0;transform:scale(.96) translateY(8px); }
-        .muni-pop-1 { opacity:1;transform:scale(1) translateY(0); }
+        .kd-modal-x { display:inline-flex;padding:6px;border:none;background:transparent;color:var(--kd-muted);border-radius:var(--kd-radius-sm);cursor:pointer;transition:background var(--kd-dur) var(--kd-ease),color var(--kd-dur) var(--kd-ease); }
+        .kd-modal-x:hover { background:var(--kd-surface-3);color:var(--kd-text); }
+        .kd-modal-x:focus-visible { outline:none;box-shadow:var(--kd-ring); }
+        .kd-fade { transition:opacity var(--kd-dur) var(--kd-ease); }
+        .kd-fade-0 { opacity:0; } .kd-fade-1 { opacity:1; }
+        .kd-pop { transition:opacity var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease); }
+        .kd-pop-0 { opacity:0;transform:scale(.96) translateY(8px); }
+        .kd-pop-1 { opacity:1;transform:scale(1) translateY(0); }
     </style>
 @endonce

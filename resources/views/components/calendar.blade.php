@@ -28,34 +28,34 @@
         same(a,b){ return a&&b && a.toDateString()===b.toDateString(); },
         iso(d){ return d ? d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0') : ''; }
     }"
-    {{ $attributes->merge(['class' => 'muni-cal']) }}
+    {{ $attributes->merge(['class' => 'kd-cal']) }}
 >
     <input type="hidden" name="{{ $name }}" :value="iso(sel)">
-    <div class="muni-cal__head">
-        <button type="button" @click="move(-1)" class="muni-cal__nav" aria-label="Mes anterior">‹</button>
-        <span class="muni-cal__title" x-text="titulo"></span>
-        <button type="button" @click="move(1)" class="muni-cal__nav" aria-label="Mes siguiente">›</button>
+    <div class="kd-cal__head">
+        <button type="button" @click="move(-1)" class="kd-cal__nav" aria-label="Mes anterior">‹</button>
+        <span class="kd-cal__title" x-text="titulo"></span>
+        <button type="button" @click="move(1)" class="kd-cal__nav" aria-label="Mes siguiente">›</button>
     </div>
-    <div class="muni-cal__grid">
-        <template x-for="d in dias" :key="d"><span class="muni-cal__dow" x-text="d"></span></template>
+    <div class="kd-cal__grid">
+        <template x-for="d in dias" :key="d"><span class="kd-cal__dow" x-text="d"></span></template>
         <template x-for="(c,i) in celdas" :key="i">
-            <template x-if="c"><button type="button" class="muni-cal__day" :class="same(c,sel) && 'muni-cal__day--on'" @click="pick(c)" x-text="c.getDate()"></button></template>
+            <template x-if="c"><button type="button" class="kd-cal__day" :class="same(c,sel) && 'kd-cal__day--on'" @click="pick(c)" x-text="c.getDate()"></button></template>
         </template>
     </div>
 </div>
 
 @once
     <style>
-        .muni-cal { display:inline-block; padding:14px; background:var(--kd-surface); border:1px solid var(--kd-border); border-radius:var(--kd-radius); box-shadow:var(--kd-shadow); font-family:var(--kd-font-sans); width:280px; }
-        .muni-cal__head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-        .muni-cal__title { font-size:13.5px; font-weight:700; text-transform:capitalize; }
-        .muni-cal__nav { width:30px; height:30px; border:1px solid var(--kd-border); background:var(--kd-surface); color:var(--kd-text); border-radius:var(--kd-radius-sm); cursor:pointer; font-size:16px; transition:.15s; }
-        .muni-cal__nav:hover { border-color:var(--kd-accent); color:var(--kd-accent); }
-        .muni-cal__grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
-        .muni-cal__dow { text-align:center; font-family:var(--kd-font-mono); font-size:10.5px; font-weight:600; color:var(--kd-hint); padding-bottom:6px; }
-        .muni-cal__day { aspect-ratio:1; border:none; background:transparent; color:var(--kd-text); border-radius:var(--kd-radius-sm); font-family:var(--kd-font-mono); font-size:12.5px; cursor:pointer; transition:background var(--kd-dur) var(--kd-ease); }
-        .muni-cal__day:hover { background:var(--kd-surface-2); }
-        .muni-cal__day:focus-visible { outline:none; box-shadow:var(--kd-ring); }
-        .muni-cal__day--on { background:var(--kd-accent); color:var(--kd-on-accent); font-weight:700; }
+        .kd-cal { display:inline-block; padding:14px; background:var(--kd-surface); border:1px solid var(--kd-border); border-radius:var(--kd-radius); box-shadow:var(--kd-shadow); font-family:var(--kd-font-sans); width:280px; }
+        .kd-cal__head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+        .kd-cal__title { font-size:13.5px; font-weight:700; text-transform:capitalize; }
+        .kd-cal__nav { width:30px; height:30px; border:1px solid var(--kd-border); background:var(--kd-surface); color:var(--kd-text); border-radius:var(--kd-radius-sm); cursor:pointer; font-size:16px; transition:.15s; }
+        .kd-cal__nav:hover { border-color:var(--kd-accent); color:var(--kd-accent); }
+        .kd-cal__grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+        .kd-cal__dow { text-align:center; font-family:var(--kd-font-mono); font-size:10.5px; font-weight:600; color:var(--kd-hint); padding-bottom:6px; }
+        .kd-cal__day { aspect-ratio:1; border:none; background:transparent; color:var(--kd-text); border-radius:var(--kd-radius-sm); font-family:var(--kd-font-mono); font-size:12.5px; cursor:pointer; transition:background var(--kd-dur) var(--kd-ease); }
+        .kd-cal__day:hover { background:var(--kd-surface-2); }
+        .kd-cal__day:focus-visible { outline:none; box-shadow:var(--kd-ring); }
+        .kd-cal__day--on { background:var(--kd-accent); color:var(--kd-on-accent); font-weight:700; }
     </style>
 @endonce

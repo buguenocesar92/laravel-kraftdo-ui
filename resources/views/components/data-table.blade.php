@@ -3,7 +3,7 @@
     'empty' => 'Sin resultados para este filtro.',
 ])
 
-{{-- Tabla densa de datos. El slot son las filas <tr>; usar la clase `muni-row--danger`
+{{-- Tabla densa de datos. El slot son las filas <tr>; usar la clase `kd-row--danger`
      en un <tr> para pintar la franja de estado (la firma: morosidad como banda izquierda,
      no como badge redondo). Envuelta en un contenedor con scroll horizontal propio. --}}
 <div style="overflow-x:auto;border:1px solid var(--kd-border);border-radius:var(--kd-radius);background:var(--kd-surface);">
@@ -32,11 +32,11 @@
 {{-- Estilos de fila: aplican a los <tr>/<td> que el consumidor pone en el slot. --}}
 @once
     <style>
-        .muni-data-body td, [data-muni-row] td { padding: 8px 12px; border-bottom: 1px solid var(--kd-border); white-space: nowrap; color: var(--kd-text); }
-        [data-muni-row]:hover { background: var(--kd-surface-2); }
-        [data-muni-row].muni-row--danger { position: relative; }
-        [data-muni-row].muni-row--danger td:first-child { box-shadow: inset 3px 0 0 var(--kd-danger-fg); }
-        [data-muni-row].muni-row--danger td:first-child { color: var(--kd-danger-fg); font-weight: 600; }
-        .muni-num { font-family: var(--kd-font-mono); font-variant-numeric: tabular-nums; }
+        .kd-data-body td, [data-kd-row] td { padding: 8px 12px; border-bottom: 1px solid var(--kd-border); white-space: nowrap; color: var(--kd-text); }
+        [data-kd-row]:hover { background: var(--kd-surface-2); }
+        [data-kd-row].kd-row--danger { position: relative; }
+        [data-kd-row].kd-row--danger td:first-child { box-shadow: inset 3px 0 0 var(--kd-danger-fg); }
+        [data-kd-row].kd-row--danger td:first-child { color: var(--kd-danger-fg); font-weight: 600; }
+        .kd-num { font-family: var(--kd-font-mono); font-variant-numeric: tabular-nums; }
     </style>
 @endonce

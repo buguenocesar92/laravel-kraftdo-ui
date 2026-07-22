@@ -7,18 +7,18 @@
 <span
     aria-hidden="true"
     {{ $attributes->merge([
-        'class' => 'muni-skel',
+        'class' => 'kd-skel',
         'style' => "display:block;width:{$width};height:{$height};border-radius:{$rounded};",
     ]) }}
 ></span>
 
 @once
     <style>
-        .muni-skel { position:relative; overflow:hidden; background:var(--kd-surface-3); }
-        .muni-skel::after { content:""; position:absolute; inset:0;
+        .kd-skel { position:relative; overflow:hidden; background:var(--kd-surface-3); }
+        .kd-skel::after { content:""; position:absolute; inset:0;
             background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--kd-text) 6%,transparent),transparent);
-            transform:translateX(-100%); animation:muni-shimmer 1.4s infinite; }
-        @keyframes muni-shimmer { 100% { transform:translateX(100%); } }
-        @media (prefers-reduced-motion:reduce) { .muni-skel::after { animation:none; } }
+            transform:translateX(-100%); animation:kd-shimmer 1.4s infinite; }
+        @keyframes kd-shimmer { 100% { transform:translateX(100%); } }
+        @media (prefers-reduced-motion:reduce) { .kd-skel::after { animation:none; } }
     </style>
 @endonce

@@ -29,20 +29,20 @@
 >
     @if ($searchable)
         <div style="margin-bottom:12px;position:relative;max-width:280px;">
-            <input x-model="q" placeholder="Buscar…" class="muni-st__search">
+            <input x-model="q" placeholder="Buscar…" class="kd-st__search">
         </div>
     @endif
 
     <div style="overflow-x:auto;border:1px solid var(--kd-border);border-radius:var(--kd-radius);background:var(--kd-surface);">
-        <table class="muni-st">
+        <table class="kd-st">
             <thead>
                 <tr>
                     <template x-for="c in cols" :key="c.key">
-                        <th :style="`text-align:${c.align||'left'}`" :class="(c.sortable!==false) && 'muni-st__sortable'" @click="c.sortable!==false && sort(c.key)">
+                        <th :style="`text-align:${c.align||'left'}`" :class="(c.sortable!==false) && 'kd-st__sortable'" @click="c.sortable!==false && sort(c.key)">
                             <span style="display:inline-flex;align-items:center;gap:5px;">
                                 <span x-text="c.label"></span>
                                 <template x-if="c.sortable!==false">
-                                    <span class="muni-st__arrow" :style="sortKey===c.key ? 'opacity:1' : 'opacity:.3'" x-text="sortKey===c.key ? (sortDir>0?'↑':'↓') : '↕'"></span>
+                                    <span class="kd-st__arrow" :style="sortKey===c.key ? 'opacity:1' : 'opacity:.3'" x-text="sortKey===c.key ? (sortDir>0?'↑':'↓') : '↕'"></span>
                                 </template>
                             </span>
                         </th>
@@ -51,7 +51,7 @@
             </thead>
             <tbody>
                 <template x-for="(row,ri) in view" :key="ri">
-                    <tr :class="row._tone==='danger' && 'muni-st__danger'">
+                    <tr :class="row._tone==='danger' && 'kd-st__danger'">
                         <template x-for="c in cols" :key="c.key">
                             <td :style="`text-align:${c.align||'left'};${c.mono?'font-family:var(--kd-font-mono);font-variant-numeric:tabular-nums;':''}`" x-text="row[c.key]"></td>
                         </template>
@@ -67,16 +67,16 @@
 
 @once
     <style>
-        .muni-st { width:100%; border-collapse:collapse; font-family:var(--kd-font-sans); font-size:12.5px; }
-        .muni-st th { text-align:left; white-space:nowrap; padding:9px 12px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--kd-muted); background:var(--kd-surface-2); border-bottom:1px solid var(--kd-border); }
-        .muni-st__sortable { cursor:pointer; user-select:none; transition:color var(--kd-dur) var(--kd-ease); }
-        .muni-st__sortable:hover { color:var(--kd-text); }
-        .muni-st__arrow { font-family:var(--kd-font-mono); font-size:11px; }
-        .muni-st td { padding:9px 12px; border-bottom:1px solid var(--kd-border); white-space:nowrap; color:var(--kd-text); }
-        .muni-st tbody tr { transition:background var(--kd-dur) var(--kd-ease); }
-        .muni-st tbody tr:hover { background:var(--kd-surface-2); }
-        .muni-st__danger td:first-child { box-shadow:inset 3px 0 0 var(--kd-danger-fg); color:var(--kd-danger-fg); font-weight:600; }
-        .muni-st__search { width:100%; padding:9px 12px; font-family:var(--kd-font-sans); font-size:13px; color:var(--kd-text); background:var(--kd-surface); border:1px solid var(--kd-border); border-radius:var(--kd-radius-sm); }
-        .muni-st__search:focus { outline:none; border-color:var(--kd-accent); box-shadow:var(--kd-ring); }
+        .kd-st { width:100%; border-collapse:collapse; font-family:var(--kd-font-sans); font-size:12.5px; }
+        .kd-st th { text-align:left; white-space:nowrap; padding:9px 12px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--kd-muted); background:var(--kd-surface-2); border-bottom:1px solid var(--kd-border); }
+        .kd-st__sortable { cursor:pointer; user-select:none; transition:color var(--kd-dur) var(--kd-ease); }
+        .kd-st__sortable:hover { color:var(--kd-text); }
+        .kd-st__arrow { font-family:var(--kd-font-mono); font-size:11px; }
+        .kd-st td { padding:9px 12px; border-bottom:1px solid var(--kd-border); white-space:nowrap; color:var(--kd-text); }
+        .kd-st tbody tr { transition:background var(--kd-dur) var(--kd-ease); }
+        .kd-st tbody tr:hover { background:var(--kd-surface-2); }
+        .kd-st__danger td:first-child { box-shadow:inset 3px 0 0 var(--kd-danger-fg); color:var(--kd-danger-fg); font-weight:600; }
+        .kd-st__search { width:100%; padding:9px 12px; font-family:var(--kd-font-sans); font-size:13px; color:var(--kd-text); background:var(--kd-surface); border:1px solid var(--kd-border); border-radius:var(--kd-radius-sm); }
+        .kd-st__search:focus { outline:none; border-color:var(--kd-accent); box-shadow:var(--kd-ring); }
     </style>
 @endonce

@@ -9,7 +9,7 @@
     'required' => false,
 ])
 
-@php $id = $name ? 'muni-'.$name : 'muni-'.uniqid(); @endphp
+@php $id = $name ? 'kd-'.$name : 'kd-'.uniqid(); @endphp
 
 <div style="display:flex;flex-direction:column;gap:6px;">
     @if ($label)
@@ -24,7 +24,7 @@
             @if ($name) name="{{ $name }}" @endif
             @if ($required) required @endif
             {{ $attributes->merge([
-                'class' => 'muni-select',
+                'class' => 'kd-select',
                 'style' => 'width:100%;padding:10px 34px 10px 12px;appearance:none;'
                     .'font-family:var(--kd-font-sans);font-size:13.5px;color:var(--kd-text);'
                     .'background:var(--kd-surface);border:1px solid '.($error ? 'var(--kd-danger-border)' : 'var(--kd-border)').';'
@@ -51,6 +51,6 @@
 
 @once
     <style>
-        .muni-select:focus { outline: none; border-color: var(--kd-accent); box-shadow: var(--kd-ring); }
+        .kd-select:focus { outline: none; border-color: var(--kd-accent); box-shadow: var(--kd-ring); }
     </style>
 @endonce

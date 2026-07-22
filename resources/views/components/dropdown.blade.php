@@ -18,9 +18,9 @@
         x-show="open"
         x-cloak
         @click.outside="open = false"
-        x-transition:enter="muni-dd-enter"
-        x-transition:enter-start="muni-dd-enter-start"
-        x-transition:enter-end="muni-dd-enter-end"
+        x-transition:enter="kd-dd-enter"
+        x-transition:enter-start="kd-dd-enter-start"
+        x-transition:enter-end="kd-dd-enter-end"
         role="menu"
         {{ $attributes->merge([
             'style' => "position:absolute;top:calc(100% + 6px);{$origin}z-index:50;min-width:{$width};"
@@ -35,8 +35,8 @@
 
 @once
     <style>
-        .muni-dd-enter { transition: opacity var(--kd-dur) var(--kd-ease), transform var(--kd-dur) var(--kd-ease); }
-        .muni-dd-enter-start { opacity: 0; transform: scale(0.96) translateY(-4px); }
-        .muni-dd-enter-end { opacity: 1; transform: scale(1) translateY(0); }
+        .kd-dd-enter { transition: opacity var(--kd-dur) var(--kd-ease), transform var(--kd-dur) var(--kd-ease); }
+        .kd-dd-enter-start { opacity: 0; transform: scale(0.96) translateY(-4px); }
+        .kd-dd-enter-end { opacity: 1; transform: scale(1) translateY(0); }
     </style>
 @endonce

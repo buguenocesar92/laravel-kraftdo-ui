@@ -8,7 +8,7 @@
     'required' => false,
 ])
 
-@php $id = $name ? 'muni-'.$name : 'muni-'.uniqid(); @endphp
+@php $id = $name ? 'kd-'.$name : 'kd-'.uniqid(); @endphp
 
 <div style="display:flex;flex-direction:column;gap:6px;">
     @if ($label)
@@ -28,7 +28,7 @@
             @if ($required) required @endif
             @if ($error) aria-invalid="true" @endif
             {{ $attributes->merge([
-                'class' => 'muni-input',
+                'class' => 'kd-input',
                 'style' => 'width:100%;padding:10px 12px;'.($icon ? 'padding-left:36px;' : '')
                     .'font-family:var(--kd-font-sans);font-size:13.5px;color:var(--kd-text);'
                     .'background:var(--kd-surface);border:1px solid '.($error ? 'var(--kd-danger-border)' : 'var(--kd-border)').';'
@@ -46,8 +46,8 @@
 
 @once
     <style>
-        .muni-input::placeholder { color: var(--kd-hint); }
-        .muni-input:focus { outline: none; border-color: var(--kd-accent); box-shadow: var(--kd-ring); }
-        .muni-input:disabled { background: var(--kd-surface-2); color: var(--kd-muted); cursor: not-allowed; }
+        .kd-input::placeholder { color: var(--kd-hint); }
+        .kd-input:focus { outline: none; border-color: var(--kd-accent); box-shadow: var(--kd-ring); }
+        .kd-input:disabled { background: var(--kd-surface-2); color: var(--kd-muted); cursor: not-allowed; }
     </style>
 @endonce

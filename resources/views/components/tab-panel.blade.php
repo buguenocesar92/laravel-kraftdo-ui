@@ -8,7 +8,7 @@
     x-show="active === {{ (int) $index }}"
     x-cloak
     role="tabpanel"
-    x-transition:enter="muni-fade" x-transition:enter-start="muni-fade-0" x-transition:enter-end="muni-fade-1"
+    x-transition:enter="kd-fade" x-transition:enter-start="kd-fade-0" x-transition:enter-end="kd-fade-1"
     {{ $attributes }}
 >
     {{ $slot }}

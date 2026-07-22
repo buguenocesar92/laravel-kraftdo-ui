@@ -19,8 +19,8 @@
                 :aria-selected="active === {{ $i }}"
                 :tabindex="active === {{ $i }} ? 0 : -1"
                 @click="active = {{ $i }}"
-                class="muni-tab"
-                :class="active === {{ $i }} && 'muni-tab--on'"
+                class="kd-tab"
+                :class="active === {{ $i }} && 'kd-tab--on'"
             >{{ $label }}</button>
         @endforeach
     </div>
@@ -30,13 +30,13 @@
 
 @once
     <style>
-        .muni-tab { position:relative;padding:10px 14px;font-family:var(--kd-font-sans);font-size:13.5px;font-weight:600;
+        .kd-tab { position:relative;padding:10px 14px;font-family:var(--kd-font-sans);font-size:13.5px;font-weight:600;
             color:var(--kd-muted);background:transparent;border:none;cursor:pointer;white-space:nowrap;
             transition:color var(--kd-dur) var(--kd-ease); }
-        .muni-tab:hover { color:var(--kd-text); }
-        .muni-tab:focus-visible { outline:none;box-shadow:var(--kd-ring);border-radius:var(--kd-radius-sm); }
-        .muni-tab--on { color:var(--kd-accent); }
-        .muni-tab--on::after { content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;
+        .kd-tab:hover { color:var(--kd-text); }
+        .kd-tab:focus-visible { outline:none;box-shadow:var(--kd-ring);border-radius:var(--kd-radius-sm); }
+        .kd-tab--on { color:var(--kd-accent); }
+        .kd-tab--on::after { content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;
             background:var(--kd-accent);border-radius:2px 2px 0 0; }
     </style>
 @endonce

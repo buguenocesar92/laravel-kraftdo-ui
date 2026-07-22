@@ -23,8 +23,8 @@
                 @click="value = {{ $i }}" @mouseenter="hover = {{ $i }}" @mouseleave="hover = 0"
             @endif
             :aria-checked="value >= {{ $i }}"
-            class="muni-star"
-            :class="(hover || value) >= {{ $i }} && 'muni-star--on'"
+            class="kd-star"
+            :class="(hover || value) >= {{ $i }} && 'kd-star--on'"
             style="--star:{{ $color }};{{ $readonly ? 'cursor:default;' : '' }}"
             aria-label="{{ $i }} de {{ $max }}"
         >★</button>
@@ -33,9 +33,9 @@
 
 @once
     <style>
-        .muni-star { background:none; border:none; padding:0 1px; font-size:20px; line-height:1; color:var(--kd-border-2); cursor:pointer; transition:color var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease); }
-        .muni-star:hover { transform:scale(1.15); }
-        .muni-star:focus-visible { outline:none; box-shadow:var(--kd-ring); border-radius:4px; }
-        .muni-star--on { color:var(--star); text-shadow:var(--kd-glow); }
+        .kd-star { background:none; border:none; padding:0 1px; font-size:20px; line-height:1; color:var(--kd-border-2); cursor:pointer; transition:color var(--kd-dur) var(--kd-ease),transform var(--kd-dur) var(--kd-ease); }
+        .kd-star:hover { transform:scale(1.15); }
+        .kd-star:focus-visible { outline:none; box-shadow:var(--kd-ring); border-radius:4px; }
+        .kd-star--on { color:var(--star); text-shadow:var(--kd-glow); }
     </style>
 @endonce

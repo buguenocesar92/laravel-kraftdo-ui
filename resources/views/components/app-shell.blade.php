@@ -8,7 +8,7 @@
 ])
 
 <!DOCTYPE html>
-<html lang="es" data-muni-theme="{{ $theme }}">
+<html lang="es" data-kd-theme="{{ $theme }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

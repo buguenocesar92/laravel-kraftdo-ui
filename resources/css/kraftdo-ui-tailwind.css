@@ -2,40 +2,40 @@
    kraftdo-ui-tailwind.css — Puente OPCIONAL a Tailwind v4.
    ----------------------------------------------------------------------------
    Solo para apps en Tailwind v4 que quieran, además de los componentes:
-     - la variante `dark:` ligada a data-muni-theme
-     - utilidades de color `bg-muni-*`, `text-muni-*`, `border-muni-*`
+     - la variante `dark:` ligada a data-kd-theme
+     - utilidades de color `bg-kd-*`, `text-kd-*`, `border-kd-*`
    Importar DESPUÉS de `@import "tailwindcss"` y de `kraftdo-ui.css`.
    Las apps en Tailwind v3 NO deben importar este archivo (usa sintaxis v4).
    ============================================================================ */
 
 /* La variante `dark:` cubre TODOS los activadores del sistema: nuestro atributo,
-   la clase `.dark` de Filament/Tailwind, y [data-theme=dark]. Así `dark:bg-muni-*`
+   la clase `.dark` de Filament/Tailwind, y [data-theme=dark]. Así `dark:bg-kd-*`
    funciona igual dentro de un panel Filament que en una PWA. */
 @custom-variant dark (&:where(
-    [data-muni-theme=dark], [data-muni-theme=dark] *,
+    [data-kd-theme=dark], [data-kd-theme=dark] *,
     [data-theme=dark], [data-theme=dark] *,
     .dark, .dark *
 ));
 
 @theme inline {
-    --color-muni-bg: var(--kd-bg);
-    --color-muni-surface: var(--kd-surface);
-    --color-muni-surface-2: var(--kd-surface-2);
-    --color-muni-surface-3: var(--kd-surface-3);
-    --color-muni-panel: var(--kd-panel);
-    --color-muni-text: var(--kd-text);
-    --color-muni-muted: var(--kd-muted);
-    --color-muni-hint: var(--kd-hint);
-    --color-muni-border: var(--kd-border);
-    --color-muni-accent: var(--kd-accent);
-    --color-muni-ok: var(--kd-ok-fg);
-    --color-muni-warn: var(--kd-warn-fg);
-    --color-muni-danger: var(--kd-danger-fg);
-    --color-muni-info: var(--kd-info-fg);
+    --color-kd-bg: var(--kd-bg);
+    --color-kd-surface: var(--kd-surface);
+    --color-kd-surface-2: var(--kd-surface-2);
+    --color-kd-surface-3: var(--kd-surface-3);
+    --color-kd-panel: var(--kd-panel);
+    --color-kd-text: var(--kd-text);
+    --color-kd-muted: var(--kd-muted);
+    --color-kd-hint: var(--kd-hint);
+    --color-kd-border: var(--kd-border);
+    --color-kd-accent: var(--kd-accent);
+    --color-kd-ok: var(--kd-ok-fg);
+    --color-kd-warn: var(--kd-warn-fg);
+    --color-kd-danger: var(--kd-danger-fg);
+    --color-kd-info: var(--kd-info-fg);
 
-    --font-muni-sans: var(--kd-font-sans);
-    --font-muni-mono: var(--kd-font-mono);
+    --font-kd-sans: var(--kd-font-sans);
+    --font-kd-mono: var(--kd-font-mono);
 
-    --radius-muni: var(--kd-radius);
-    --radius-muni-lg: var(--kd-radius-lg);
+    --radius-kd: var(--kd-radius);
+    --radius-kd-lg: var(--kd-radius-lg);
 }

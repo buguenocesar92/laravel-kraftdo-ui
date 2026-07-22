@@ -31,7 +31,7 @@
             @keydown="onKey({{ $i }}, $event)"
             @paste.prevent="paste(($event.clipboardData||window.clipboardData).getData('text').replace(/\D/g,''))"
             inputmode="numeric" maxlength="1" autocomplete="one-time-code"
-            class="muni-otp"
+            class="kd-otp"
             aria-label="Dígito {{ $i + 1 }}"
         >
     @endfor
@@ -39,10 +39,10 @@
 
 @once
     <style>
-        .muni-otp { width:46px; height:54px; text-align:center; font-family:var(--kd-font-mono); font-size:22px; font-weight:700; color:var(--kd-text);
+        .kd-otp { width:46px; height:54px; text-align:center; font-family:var(--kd-font-mono); font-size:22px; font-weight:700; color:var(--kd-text);
             background:var(--kd-surface); border:1px solid var(--kd-border); border-radius:var(--kd-radius-sm);
             transition:border-color var(--kd-dur) var(--kd-ease),box-shadow var(--kd-dur) var(--kd-ease); }
-        .muni-otp:focus { outline:none; border-color:var(--kd-accent); box-shadow:var(--kd-ring); }
-        @media (max-width:420px){ .muni-otp { width:40px; height:48px; font-size:19px; } }
+        .kd-otp:focus { outline:none; border-color:var(--kd-accent); box-shadow:var(--kd-ring); }
+        @media (max-width:420px){ .kd-otp { width:40px; height:48px; font-size:19px; } }
     </style>
 @endonce

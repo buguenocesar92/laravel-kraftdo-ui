@@ -20,7 +20,7 @@
     ];
 @endphp
 
-<div {{ $attributes->merge(['class' => 'muni-chartbar']) }} style="display:flex;flex-direction:column;">
+<div {{ $attributes->merge(['class' => 'kd-chartbar']) }} style="display:flex;flex-direction:column;">
     <div style="display:flex;align-items:flex-end;gap:8px;height:{{ $height }}px;padding-top:8px;">
         @foreach ($norm as $d)
             @php
@@ -28,8 +28,8 @@
                 $c = $toneColor[$d['tone'] ?? $tone] ?? 'var(--kd-accent)';
             @endphp
             <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0;" title="{{ $d['label'] }}: {{ $d['value'] }}">
-                <span class="muni-chartbar__val">{{ $d['value'] }}</span>
-                <div class="muni-chartbar__bar" style="height:{{ $h }}%;background:linear-gradient(180deg,{{ $c }},color-mix(in srgb,{{ $c }} 55%,transparent));"></div>
+                <span class="kd-chartbar__val">{{ $d['value'] }}</span>
+                <div class="kd-chartbar__bar" style="height:{{ $h }}%;background:linear-gradient(180deg,{{ $c }},color-mix(in srgb,{{ $c }} 55%,transparent));"></div>
             </div>
         @endforeach
     </div>
@@ -44,7 +44,7 @@
 
 @once
     <style>
-        .muni-chartbar__bar { width:100%; max-width:38px; border-radius:5px 5px 0 0; transition:height .6s var(--kd-ease); }
-        .muni-chartbar__val { font-family:var(--kd-font-mono); font-variant-numeric:tabular-nums; font-size:11px; font-weight:600; color:var(--kd-muted); margin-bottom:5px; }
+        .kd-chartbar__bar { width:100%; max-width:38px; border-radius:5px 5px 0 0; transition:height .6s var(--kd-ease); }
+        .kd-chartbar__val { font-family:var(--kd-font-mono); font-variant-numeric:tabular-nums; font-size:11px; font-weight:600; color:var(--kd-muted); margin-bottom:5px; }
     </style>
 @endonce

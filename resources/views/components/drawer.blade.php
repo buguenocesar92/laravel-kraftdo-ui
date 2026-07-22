@@ -14,17 +14,17 @@
     <template x-teleport="body">
         <div x-show="open" x-cloak style="position:fixed;inset:0;z-index:210;">
             <div x-show="open" @click="open=false"
-                 x-transition:enter="muni-fade" x-transition:enter-start="muni-fade-0" x-transition:enter-end="muni-fade-1"
-                 x-transition:leave="muni-fade" x-transition:leave-start="muni-fade-1" x-transition:leave-end="muni-fade-0"
+                 x-transition:enter="kd-fade" x-transition:enter-start="kd-fade-0" x-transition:enter-end="kd-fade-1"
+                 x-transition:leave="kd-fade" x-transition:leave-start="kd-fade-1" x-transition:leave-end="kd-fade-0"
                  style="position:absolute;inset:0;background:rgba(10,14,20,.5);backdrop-filter:blur(2px);"></div>
 
             <div x-show="open" role="dialog" aria-modal="true"
-                 x-transition:enter="muni-drawer" x-transition:enter-start="{{ $isRight ? 'muni-drawer-r0' : 'muni-drawer-l0' }}" x-transition:enter-end="muni-drawer-1"
-                 x-transition:leave="muni-drawer" x-transition:leave-start="muni-drawer-1" x-transition:leave-end="{{ $isRight ? 'muni-drawer-r0' : 'muni-drawer-l0' }}"
+                 x-transition:enter="kd-drawer" x-transition:enter-start="{{ $isRight ? 'kd-drawer-r0' : 'kd-drawer-l0' }}" x-transition:enter-end="kd-drawer-1"
+                 x-transition:leave="kd-drawer" x-transition:leave-start="kd-drawer-1" x-transition:leave-end="{{ $isRight ? 'kd-drawer-r0' : 'kd-drawer-l0' }}"
                  style="position:absolute;top:0;bottom:0;{{ $isRight ? 'right:0;' : 'left:0;' }}width:{{ $width }};max-width:92vw;display:flex;flex-direction:column;background:var(--kd-surface);border-{{ $isRight ? 'left' : 'right' }}:1px solid var(--kd-border);box-shadow:var(--kd-shadow-lg);">
                 <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--kd-border);">
                     <h2 style="margin:0;font-family:var(--kd-font-sans);font-size:15px;font-weight:700;color:var(--kd-text);">{{ $title }}</h2>
-                    <button type="button" @click="open=false" aria-label="Cerrar" class="muni-drawer__x">
+                    <button type="button" @click="open=false" aria-label="Cerrar" class="kd-drawer__x">
                         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="M5 5l10 10M15 5L5 15" stroke-linecap="round"/></svg>
                     </button>
                 </header>
@@ -37,10 +37,10 @@
 
 @once
     <style>
-        .muni-drawer__x { display:inline-flex; padding:6px; border:none; background:transparent; color:var(--kd-muted); border-radius:var(--kd-radius-sm); cursor:pointer; transition:background var(--kd-dur) var(--kd-ease); }
-        .muni-drawer__x:hover { background:var(--kd-surface-3); color:var(--kd-text); }
-        .muni-fade { transition:opacity var(--kd-dur) var(--kd-ease); } .muni-fade-0 { opacity:0; } .muni-fade-1 { opacity:1; }
-        .muni-drawer { transition:transform .28s var(--kd-ease); }
-        .muni-drawer-r0 { transform:translateX(100%); } .muni-drawer-l0 { transform:translateX(-100%); } .muni-drawer-1 { transform:translateX(0); }
+        .kd-drawer__x { display:inline-flex; padding:6px; border:none; background:transparent; color:var(--kd-muted); border-radius:var(--kd-radius-sm); cursor:pointer; transition:background var(--kd-dur) var(--kd-ease); }
+        .kd-drawer__x:hover { background:var(--kd-surface-3); color:var(--kd-text); }
+        .kd-fade { transition:opacity var(--kd-dur) var(--kd-ease); } .kd-fade-0 { opacity:0; } .kd-fade-1 { opacity:1; }
+        .kd-drawer { transition:transform .28s var(--kd-ease); }
+        .kd-drawer-r0 { transform:translateX(100%); } .kd-drawer-l0 { transform:translateX(-100%); } .kd-drawer-1 { transform:translateX(0); }
     </style>
 @endonce

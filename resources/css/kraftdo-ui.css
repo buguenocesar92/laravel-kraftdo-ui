@@ -12,12 +12,12 @@
 
    DARK MODE UNIVERSAL — se activa con CUALQUIERA de estos mecanismos, para ser
    compatible con todo el ecosistema a la vez:
-     · `data-muni-theme="dark"`  → nuestro, tema fijo (feria/disc).
+     · `data-kd-theme="dark"`  → nuestro, tema fijo (feria/disc).
      · `.dark`                    → Filament y la estrategia de clase de Tailwind.
      · `[data-theme="dark"]`      → convención de otras UI / PWA-SPA.
      · `@media (prefers-color-scheme: dark)` → PWA/SPA que sigue el OS (fallback).
    Jerarquía: light por defecto → dark por preferencia del OS → activadores
-   explícitos de clase/atributo (ganan sobre el OS) → `data-muni-theme` explícito
+   explícitos de clase/atributo (ganan sobre el OS) → `data-kd-theme` explícito
    (override final, para congelar el tema de un sistema con identidad fija).
 
    CSS PLANO: funciona en Tailwind v3, v4 o sin Tailwind. Los componentes usan
@@ -96,10 +96,10 @@
 
 /* ── Bloque de valores DARK (reutilizado por todos los activadores) ──────────── */
 /* Regla 1: preferencia del OS (PWA/SPA sin control explícito). El :not() permite
-   que un sistema con tema fijo en light (feria/disc con data-muni-theme="light")
+   que un sistema con tema fijo en light (feria/disc con data-kd-theme="light")
    NO se oscurezca aunque el usuario tenga el OS en modo oscuro. */
 @media (prefers-color-scheme: dark) {
-    :root:not([data-muni-theme="light"]):not([data-theme="light"]):not(.light) {
+    :root:not([data-kd-theme="light"]):not([data-theme="light"]):not(.light) {
         --kd-bg: var(--kd-dark);
         --kd-surface: var(--kd-navy);
         --kd-surface-2: #334155;
@@ -138,9 +138,9 @@
 }
 
 /* Regla 2: activadores EXPLÍCITOS de dark — Filament (.dark), Tailwind class,
-   [data-theme=dark] y nuestro data-muni-theme=dark. Vienen DESPUÉS del media query
+   [data-theme=dark] y nuestro data-kd-theme=dark. Vienen DESPUÉS del media query
    en la cascada, así que ganan sobre la preferencia del OS. */
-[data-muni-theme="dark"],
+[data-kd-theme="dark"],
 [data-theme="dark"],
 .dark {
     --kd-bg: var(--kd-dark);
@@ -182,7 +182,7 @@
 /* Regla 3: override EXPLÍCITO a light. Congela el tema claro de un sistema con
    identidad fija (discapacidad) aunque el OS esté en dark o Filament ponga .dark
    en un ancestro. Al venir el último, gana la cascada a igual especificidad. */
-[data-muni-theme="light"] {
+[data-kd-theme="light"] {
     --kd-bg: #f5f6f8;
     --kd-surface: #ffffff;
     --kd-surface-2: #f5f6f8;

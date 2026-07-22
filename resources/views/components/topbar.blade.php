@@ -18,13 +18,13 @@
             .'background:var(--kd-surface);border-bottom:1px solid var(--kd-border);',
     ]) }}
 >
-    {{-- Logo sobre lienzo blanco: patrón del ecosistema (el escudo municipal necesita
+    {{-- Logo sobre lienzo blanco: patrón del ecosistema (el logo del sistema necesita
          fondo claro para leerse igual en tema oscuro y claro). --}}
     <div style="height:38px;display:flex;align-items:center;justify-content:center;padding:4px 10px;background:#fff;border-radius:var(--kd-radius-sm);flex-shrink:0;">
         @if ($logo)
             {{ $logo }}
         @else
-            <span style="font-family:var(--kd-font-mono);font-weight:700;font-size:13px;color:#0b0f14;letter-spacing:-.02em;">GRA</span>
+            <span style="font-family:var(--kd-font-mono);font-weight:700;font-size:13px;color:#0b0f14;letter-spacing:-.02em;">KD</span>
         @endif
     </div>
 

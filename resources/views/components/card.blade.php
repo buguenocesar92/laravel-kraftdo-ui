@@ -5,7 +5,7 @@
 ])
 
 <section
-    class="muni-card"
+    class="kd-card"
     {{ $attributes->merge([
         'style' => 'background:var(--kd-surface);border:1px solid var(--kd-border);'
             .'border-radius:var(--kd-radius-lg);box-shadow:var(--kd-shadow);overflow:hidden;'
@@ -25,5 +25,5 @@
 </section>
 
 @once
-    <style>.muni-card:hover { box-shadow: var(--kd-shadow-md); }</style>
+    <style>.kd-card:hover { box-shadow: var(--kd-shadow-md); }</style>
 @endonce
