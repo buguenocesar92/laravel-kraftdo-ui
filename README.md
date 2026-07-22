@@ -1,23 +1,124 @@
 # laravel-kraftdo-ui
 
-Sistema de diseño y componentes Blade del **ecosistema KraftDo**. Fork del paquete de
-diseño municipal (`laravel-muni-ui`), retemado a la identidad de marca de KraftDo.
-Centraliza en un paquete lo que antes estaba copiado entre sistemas: un contrato de
-tokens `--kd-*` con dos temas seleccionables y un set de componentes de panel de datos
-(topbar, KPIs, tabla densa, filtros, badges).
+Sistema de diseño y componentes Blade del **ecosistema KraftDo**: un contrato de tokens
+`--kd-*` con temas claro/oscuro, 48 componentes de panel de datos y producto, animaciones
+de marca y un plugin de Filament. Centraliza en un paquete lo que antes se copiaba entre
+sistemas.
 
-## Filosofía: maquinaria + presets
+Lo consumen `kraftdo-nfc-v2`, `kraftdo-sitio`, `kraftdo-crm` y `kraftdo-hub`.
 
-El paquete NO impone un look. Empaqueta la **maquinaria** (tokens, componentes) y trae dos
-**presets** de arranque para sistemas nuevos:
+## Requisitos
 
-| Tema | Linaje | Tipografía | Uso |
-|------|--------|-----------|-----|
-| `light` | discapacidad (`.om`) | DM Sans / DM Mono | institucional sereno, teal |
-| `dark` | feria (`.fc`) | IBM Plex Sans / Mono | terminal de datos, alto contraste |
+- PHP 8.3+, Laravel 12 o 13
+- Tailwind CSS **v4** (usa `@theme`, `@custom-variant`, `@source`) — opcional, el CSS es
+  plano y funciona igual en v3 o sin Tailwind
+- Fuente **Inter** self-hosted (recomendado): sin ella, el sistema degrada a `system-ui`
 
-Un sistema existente puede **sobreescribir los tokens** (`--kd-*`) para conservar su
-identidad propia sin tocar los componentes.
+## Instalación
+
+```bash
+composer require kraftdo/laravel-kraftdo-ui
+```
+
+El repo es privado. En el `composer.json` del proyecto consumidor hay que apuntar al
+repositorio VCS de GitHub — ojo, el **vendor de Composer** es `kraftdo` pero el **dueño en
+GitHub** es `buguenocesar92`, no son el mismo nombre:
+
+```json
+"repositories": {
+    "kraftdo-ui": { "type": "vcs", "url": "https://github.com/buguenocesar92/laravel-kraftdo-ui.git" }
+}
+```
+
+## CSS: los `@import`
+
+En `resources/css/app.css` del proyecto consumidor:
+
+```css
+@import "tailwindcss";
+@import "../../vendor/kraftdo/laravel-kraftdo-ui/resources/css/kraftdo-ui.css";
+@source "../../vendor/kraftdo/laravel-kraftdo-ui/resources/views/**/*.blade.php";
+```
+
+`kraftdo-ui.css` ya importa `kraftdo-animations.css` — no hace falta declararlo aparte.
+Para apps en Tailwind v4 que además quieran la variante `dark:` y utilidades `bg-kd-*` /
+`text-kd-*` / `border-kd-*`, se agrega **después** de los dos imports anteriores:
+
+```css
+@import "../../vendor/kraftdo/laravel-kraftdo-ui/resources/css/kraftdo-ui-tailwind.css";
+```
+
+Para personalizar los tokens por proyecto, se publica el CSS y se edita la copia:
+
+```bash
+php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kraftdo-ui.css
+```
+
+## Plugin de Filament
+
+`Kraftdo\Ui\Filament\KraftdoPanel` viste cualquier panel Filament con la identidad de
+KraftDo: inyecta el tema (`kraftdo-ui-filament.css`), el degradado de marca sobre la barra
+superior y fija la paleta primaria/info/success/warning/danger/gray. Requiere
+`filament/filament` (paquete opcional, va en `require-dev`; instálalo también en la app
+que lo consume).
+
+```bash
+php artisan vendor:publish --tag=kraftdo-ui-filament
+```
+
+```php
+// En el PanelProvider:
+->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make())
+
+// Si el sistema define su propio acento y no quiere la paleta de marca:
+->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make()->conColores(false))
+```
+
+## Tokens de marca
+
+Valores tomados del CSS de la landing (kraftdo.cl). Los componentes **nunca** usan estos
+tokens directamente — solo los semánticos (`--kd-accent`, `--kd-surface`, `--kd-text`…)
+para que un cambio de paleta no obligue a tocar los 48 `.blade.php`.
+
+| Token | Valor |
+|-------|-------|
+| `--kd-green` | `#10b981` |
+| `--kd-green-dark` | `#059669` |
+| `--kd-lime` | `#32ff32` |
+| `--kd-blue` | `#3b82f6` |
+| `--kd-blue-dark` | `#2563eb` |
+| `--kd-navy` | `#1e293b` |
+| `--kd-dark` | `#0f172a` |
+
+## Uso
+
+```blade
+<x-kd::app-shell theme="dark" system="Cuentas por Cobrar" subtitle="KraftDo" status="online">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+        <x-kd::kpi :value="number_format($total, 0, ',', '.')" label="Resultado del filtro" />
+        <x-kd::kpi :value="$vencidas" label="Vencidas" tone="danger" />
+        <x-kd::kpi :value="$total - $vencidas" label="Al día" tone="ok" />
+    </div>
+
+    <x-kd::filter-bar :action="route('cuentas')">
+        <x-kd::field label="Buscar"><input name="buscar" value="{{ $filtros['buscar'] ?? '' }}"></x-kd::field>
+        <x-kd::field label="Estado">
+            <select name="vencida"><option value="">Todas</option><option value="SI">Solo vencidas</option></select>
+        </x-kd::field>
+    </x-kd::filter-bar>
+
+    <x-kd::data-table :columns="['Cliente', 'RUT', 'Plan', 'Estado']">
+        @foreach ($filas as $fila)
+            <tr data-kd-row @class(['kd-row--danger' => $fila['vencida'] === 'SI'])>
+                <td>{{ $fila['cliente'] }}</td>
+                <td class="kd-num">{{ $fila['rut'] }}</td>
+                <td>{{ $fila['plan'] }}</td>
+                <td><x-kd::badge :tone="$fila['vencida'] === 'SI' ? 'danger' : 'ok'">{{ $fila['vencida'] === 'SI' ? 'Vencida' : 'Al día' }}</x-kd::badge></td>
+            </tr>
+        @endforeach
+    </x-kd::data-table>
+</x-kd::app-shell>
+```
 
 ## Dark mode universal
 
@@ -27,7 +128,7 @@ todo el ecosistema a la vez — no hay que elegir uno:
 | Mecanismo | Para qué |
 |-----------|----------|
 | `<html class="dark">` | **Filament** (su toggle) y Tailwind class-strategy |
-| `<html data-kd-theme="dark">` | Nuestro atributo — congela un tema fijo (feria/disc) |
+| `<html data-kd-theme="dark">` | Nuestro atributo — congela un tema fijo |
 | `<html data-theme="dark">` | Convención de otras UI / PWA-SPA |
 | `@media (prefers-color-scheme: dark)` | PWA/SPA que sigue el OS (fallback automático) |
 
@@ -36,74 +137,9 @@ activadores de clase/atributo (ganan sobre el OS) → `data-kd-theme` explícito
 
 - Dentro de un **panel Filament**: no pongas `data-kd-theme` — los `<x-kd::*>` siguen
   automáticamente el toggle `.dark` de Filament.
-- Un **sistema con identidad fija** (siempre claro): pon `data-kd-theme="light"`
-  y queda inmune al OS y a un `.dark` de un ancestro.
+- Un **sistema con identidad fija**: pon `data-kd-theme="light"` o `"dark"` y queda inmune
+  al OS y a un `.dark` de un ancestro.
 - Una **PWA que sigue el OS**: no pongas nada — `prefers-color-scheme` decide.
-
-## Requisitos
-
-- PHP 8.3+, Laravel 12 o 13
-- Tailwind CSS **v4** (usa `@theme`, `@custom-variant`, `@source`)
-- Fuentes self-hosted (recomendado): `@fontsource/ibm-plex-sans`, `@fontsource/ibm-plex-mono`,
-  `@fontsource/dm-sans`, `@fontsource/dm-mono`. Sin ellas, el sistema degrada a `system-ui`.
-
-## Instalación
-
-```bash
-composer require kraftdo/laravel-kraftdo-ui
-```
-
-El repo es privado (SSH). En el `composer.json` del proyecto:
-
-```json
-"repositories": {
-    "kraftdo-ui": { "type": "vcs", "url": "https://github.com/buguenocesar92/laravel-kraftdo-ui.git" }
-}
-```
-
-En `resources/css/app.css`:
-
-```css
-@import "tailwindcss";
-@import "../../vendor/kraftdo/laravel-kraftdo-ui/resources/css/kraftdo-ui.css";
-@source "../../vendor/kraftdo/laravel-kraftdo-ui/resources/views/**/*.blade.php";
-```
-
-Para personalizar los tokens por proyecto, publica el CSS y edítalo:
-
-```bash
-php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kraftdo-ui.css
-```
-
-## Uso
-
-```blade
-<x-kd::app-shell theme="dark" system="Cuentas por Cobrar" subtitle="KraftDo" status="online">
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
-        <x-kd::kpi :value="number_format($total, 0, ',', '.')" label="Resultado del filtro" />
-        <x-kd::kpi :value="$morosos" label="Morosas" tone="danger" />
-        <x-kd::kpi :value="$total - $morosos" label="Al día" tone="ok" />
-    </div>
-
-    <x-kd::filter-bar :action="route('cuentas')">
-        <x-kd::field label="Buscar"><input name="buscar" value="{{ $filtros['buscar'] ?? '' }}"></x-kd::field>
-        <x-kd::field label="Morosidad">
-            <select name="morosa"><option value="">Todas</option><option value="SI">Solo morosas</option></select>
-        </x-kd::field>
-    </x-kd::filter-bar>
-
-    <x-kd::data-table :columns="['Razón social', 'RUT', 'Tipo', 'Estado']">
-        @foreach ($filas as $fila)
-            <tr data-kd-row @class(['kd-row--danger' => $fila['morosa'] === 'SI'])>
-                <td>{{ $fila['razon_social'] }}</td>
-                <td class="kd-num">{{ $fila['rut'] }}</td>
-                <td>{{ $fila['tipo'] }}</td>
-                <td><x-kd::badge :tone="$fila['morosa'] === 'SI' ? 'danger' : 'ok'">{{ $fila['morosa'] === 'SI' ? 'Morosa' : 'Al día' }}</x-kd::badge></td>
-            </tr>
-        @endforeach
-    </x-kd::data-table>
-</x-kd::app-shell>
-```
 
 ## Componentes
 
@@ -136,12 +172,12 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 
 ```blade
 {{-- Modal --}}
-<x-kd::modal title="Dar de baja la cuenta">
-    <x-slot:trigger><x-kd::button variant="danger">Dar de baja</x-kd::button></x-slot:trigger>
-    Se marcará <b>{{ $cuenta->razon_social }}</b> como cesada.
+<x-kd::modal title="Cancelar la suscripción">
+    <x-slot:trigger><x-kd::button variant="danger">Cancelar</x-kd::button></x-slot:trigger>
+    Se marcará <b>{{ $cliente->nombre }}</b> como cancelado.
     <x-slot:footer>
-        <x-kd::button variant="ghost" x-on:click="open=false">Cancelar</x-kd::button>
-        <x-kd::button x-on:click="open=false; $dispatch('kd-toast',{tone:'ok',message:'Cuenta dada de baja'})">Confirmar</x-kd::button>
+        <x-kd::button variant="ghost" x-on:click="open=false">Volver</x-kd::button>
+        <x-kd::button x-on:click="open=false; $dispatch('kd-toast',{tone:'ok',message:'Suscripción cancelada'})">Confirmar</x-kd::button>
     </x-slot:footer>
 </x-kd::modal>
 
@@ -173,33 +209,20 @@ php artisan vendor:publish --tag=kraftdo-ui-css   # → resources/css/vendor/kra
 
 Todos respetan `prefers-reduced-motion`, tienen estados `:focus-visible` con anillo de foco
 accesible (`--kd-ring`), y micro-interacciones de hover/active con transiciones tokenizadas.
-Los interactivos usan **Alpine 3 core** (sin plugins): en feria/discapacidad/licencias ya viene
-con Filament; en apps sin Filament, `npm i alpinejs` y `Alpine.start()`. El CSS del paquete trae
+Los interactivos usan **Alpine 3 core** (sin plugins): en los sistemas con Filament ya viene
+incluido; en apps sin Filament, `npm i alpinejs` y `Alpine.start()`. El CSS del paquete trae
 la regla `[x-cloak]` para evitar el flash inicial.
 
-**Firma del sistema:** la morosidad no es un badge redondo suelto — una fila
-`<tr data-kd-row class="kd-row--danger">` pinta una franja de estado en el borde
-izquierdo (banda de libro mayor), y los RUT/cifras usan `.kd-num` (mono tabular).
-
-## Plugin de Filament
-
-`Kraftdo\Ui\Filament\KraftdoPanel` viste cualquier panel con el tema de marca (inyecta
-`kraftdo-ui-filament.css` y el degradado sobre la barra superior) y fija la paleta
-primaria/info/success/warning/danger/gray. Requiere `filament/filament` (paquete
-opcional, va en `require-dev`; instálalo también en la app que lo consume).
+## Desarrollo
 
 ```bash
-php artisan vendor:publish --tag=kraftdo-ui-filament
+composer install
+vendor/bin/pest
+vendor/bin/pint
 ```
 
-```php
-// En el PanelProvider:
-->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make())
-// o, si el sistema define su propio acento:
-->plugin(\Kraftdo\Ui\Filament\KraftdoPanel::make()->conColores(false))
-```
-
-## Roadmap
-
-- Capa 2: primitivas BlatUI (button/input/dialog…) re-teñidas con estos tokens (requiere Alpine).
-- Pipeline v0 → Blade para componentes complejos nuevos.
+La suite (`tests/Feature/PaqueteTest.php`) verifica el registro del namespace `kd`, los
+valores de la paleta de marca, que ningún componente use tokens de marca directamente, que
+no queden restos de un origen anterior, y que las animaciones respeten
+`prefers-reduced-motion`. Corre en CI (`.github/workflows/ci.yml`) en cada push a
+`develop`/`main` y en cada PR.

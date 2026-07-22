@@ -17,6 +17,12 @@
     "autoload": { "psr-4": { "Kraftdo\\Ui\\": "src/" } },
     "autoload-dev": { "psr-4": { "Kraftdo\\Ui\\Tests\\": "tests/" } },
     "extra": { "laravel": { "providers": ["Kraftdo\\Ui\\KraftdoUiServiceProvider"] } },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }
