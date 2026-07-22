@@ -1,10 +1,14 @@
 /* ============================================================================
-   laravel-kraftdo-ui — Sistema de diseño del ecosistema municipal de Graneros
+   laravel-kraftdo-ui — Sistema de diseño del ecosistema comercial KraftDo
    ----------------------------------------------------------------------------
    Contrato de tokens `--kd-*` con dos presets:
-     - "light" → linaje `.om` (discapacidad): institucional sereno, teal.
-     - "dark"  → linaje `.fc` (feria): terminal de datos, alto contraste.
-   Valores VERBATIM de los CSS de producción (feria.css / discapacidad.css).
+     - "light" → linaje `.om` (discapacidad): estructura y jerarquía heredadas,
+       solo el acento pasa a verde KraftDo.
+     - "dark"  → linaje `.fc` (feria): terminal de datos, alto contraste. Es el
+       look principal: la landing kraftdo.cl es oscura.
+   Los tokens ESTRUCTURALES (radius, shadow, dur, ease, topbar-h…) son VERBATIM
+   de los CSS de producción originales (feria.css / discapacidad.css); los de
+   MARCA (verde/lima/azul/navy/dark) salen del CSS compilado de la landing.
 
    DARK MODE UNIVERSAL — se activa con CUALQUIERA de estos mecanismos, para ser
    compatible con todo el ecosistema a la vez:
@@ -22,22 +26,22 @@
 
 [x-cloak] { display: none !important; }
 
-/* ── Identidad institucional (INVARIANTE) ────────────────────────────────────
-   Paleta oficial de la Municipalidad de Graneros, extraída de los assets del
-   sitio madre (municipalidadgraneros.cl: escudo + franja inferior de 7 colores).
-   NO cambian con el tema: la identidad del municipio es la misma en claro y
-   oscuro. Los componentes <x-kd::gob-*> (barra, franja, escudo, footer) las
-   usan para que cada subdominio se lea como parte del sitio municipal. */
+/* ── Marca KraftDo ────────────────────────────────────────────────────────
+   Valores tomados del CSS de la landing (kraftdo.cl). Solo los tokens
+   semánticos de abajo deben usarse en componentes: así un cambio de paleta
+   no obliga a tocar ni un .blade.php. */
 :root {
-    --kd-gob-lima: #adcd60;
-    --kd-gob-verde-dark: #7fa33f;
-    --kd-gob-petroleo: #355a63;
-    --kd-gob-petroleo-dark: #00404c;
-    --kd-gob-oro: #eab02c;
-    --kd-gob-naranja: #c76421;
-    --kd-gob-celeste: #7ccbe1;
-    --kd-gob-carmin: #ca3048;
-    --kd-gob-gris: #9c9b9b;
+    --kd-green: #10b981;
+    --kd-green-dark: #059669;
+    --kd-lime: #32ff32;
+    --kd-blue: #3b82f6;
+    --kd-blue-dark: #2563eb;
+    --kd-navy: #1e293b;
+    --kd-dark: #0f172a;
+
+    /* Degradados de marca (la landing usa 34 de estos dos) */
+    --kd-grad-primary: linear-gradient(90deg, var(--kd-blue), var(--kd-green));
+    --kd-grad-vibrant: linear-gradient(90deg, var(--kd-green), var(--kd-lime));
 }
 
 /* ── Valores LIGHT (default) — linaje `.om` (discapacidad) ──────────────────── */
@@ -54,9 +58,9 @@
     --kd-border: #e0e3ea;
     --kd-border-2: #c8ccd6;
 
-    --kd-accent: #0f766e;
-    --kd-accent-strong: #115e59;
-    --kd-accent-soft: #f0fdfa;
+    --kd-accent: var(--kd-green);
+    --kd-accent-strong: var(--kd-green-dark);
+    --kd-accent-soft: #ecfdf5;
     --kd-on-accent: #ffffff;
 
     --kd-ok-fg: #0f7a5a;
@@ -83,7 +87,7 @@
     --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --kd-dur: 160ms;
 
-    --kd-font-sans: 'DM Sans', system-ui, sans-serif;
+    --kd-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --kd-font-mono: 'DM Mono', ui-monospace, monospace;
 
     --kd-topbar-h: 56px;
@@ -96,20 +100,20 @@
    NO se oscurezca aunque el usuario tenga el OS en modo oscuro. */
 @media (prefers-color-scheme: dark) {
     :root:not([data-muni-theme="light"]):not([data-theme="light"]):not(.light) {
-        --kd-bg: #0b0f14;
-        --kd-surface: #111620;
-        --kd-surface-2: #181e2a;
-        --kd-surface-3: #1c2333;
-        --kd-panel: #1c2333;
-        --kd-text: #e2e8f4;
-        --kd-muted: #7a8ba8;
+        --kd-bg: var(--kd-dark);
+        --kd-surface: var(--kd-navy);
+        --kd-surface-2: #334155;
+        --kd-surface-3: #475569;
+        --kd-panel: var(--kd-navy);
+        --kd-text: #f8fafc;
+        --kd-muted: #94a3b8;
         --kd-hint: #4a5a74;
         --kd-border: #2a3347;
         --kd-border-2: #3a4560;
-        --kd-accent: #f59e0b;
-        --kd-accent-strong: #d97706;
-        --kd-accent-soft: #2d1d00;
-        --kd-on-accent: #0b0f14;
+        --kd-accent: var(--kd-green);
+        --kd-accent-strong: var(--kd-green-dark);
+        --kd-accent-soft: rgba(16, 185, 129, .12);
+        --kd-on-accent: #ffffff;
         --kd-ok-fg: #22c55e;
         --kd-ok-bg: #0d2d1a;
         --kd-ok-border: #166534;
@@ -126,7 +130,7 @@
         --kd-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
         --kd-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
         --kd-ring: 0 0 0 3px color-mix(in srgb, var(--kd-accent) 35%, transparent);
-        --kd-font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+        --kd-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
         --kd-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
         --kd-topbar-h: 52px;
         --kd-glow: 0 0 6px currentColor;
@@ -139,20 +143,20 @@
 [data-muni-theme="dark"],
 [data-theme="dark"],
 .dark {
-    --kd-bg: #0b0f14;
-    --kd-surface: #111620;
-    --kd-surface-2: #181e2a;
-    --kd-surface-3: #1c2333;
-    --kd-panel: #1c2333;
-    --kd-text: #e2e8f4;
-    --kd-muted: #7a8ba8;
+    --kd-bg: var(--kd-dark);
+    --kd-surface: var(--kd-navy);
+    --kd-surface-2: #334155;
+    --kd-surface-3: #475569;
+    --kd-panel: var(--kd-navy);
+    --kd-text: #f8fafc;
+    --kd-muted: #94a3b8;
     --kd-hint: #4a5a74;
     --kd-border: #2a3347;
     --kd-border-2: #3a4560;
-    --kd-accent: #f59e0b;
-    --kd-accent-strong: #d97706;
-    --kd-accent-soft: #2d1d00;
-    --kd-on-accent: #0b0f14;
+    --kd-accent: var(--kd-green);
+    --kd-accent-strong: var(--kd-green-dark);
+    --kd-accent-soft: rgba(16, 185, 129, .12);
+    --kd-on-accent: #ffffff;
     --kd-ok-fg: #22c55e;
     --kd-ok-bg: #0d2d1a;
     --kd-ok-border: #166534;
@@ -169,7 +173,7 @@
     --kd-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
     --kd-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
     --kd-ring: 0 0 0 3px color-mix(in srgb, var(--kd-accent) 35%, transparent);
-    --kd-font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --kd-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --kd-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
     --kd-topbar-h: 52px;
     --kd-glow: 0 0 6px currentColor;
@@ -189,9 +193,9 @@
     --kd-hint: #6b7280;
     --kd-border: #e0e3ea;
     --kd-border-2: #c8ccd6;
-    --kd-accent: #0f766e;
-    --kd-accent-strong: #115e59;
-    --kd-accent-soft: #f0fdfa;
+    --kd-accent: var(--kd-green);
+    --kd-accent-strong: var(--kd-green-dark);
+    --kd-accent-soft: #ecfdf5;
     --kd-on-accent: #ffffff;
     --kd-ok-fg: #0f7a5a;
     --kd-ok-bg: #e2f5ee;
@@ -209,7 +213,7 @@
     --kd-shadow-md: 0 4px 16px rgba(16, 24, 40, 0.10);
     --kd-shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.14);
     --kd-ring: 0 0 0 3px color-mix(in srgb, var(--kd-accent) 30%, transparent);
-    --kd-font-sans: 'DM Sans', system-ui, sans-serif;
+    --kd-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --kd-font-mono: 'DM Mono', ui-monospace, monospace;
     --kd-topbar-h: 56px;
     --kd-glow: none;
