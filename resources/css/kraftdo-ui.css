@@ -24,6 +24,8 @@
    `style` inline con `var(--kd-*)`, no dependen de utilidades Tailwind.
    ============================================================================ */
 
+@import "./kraftdo-animations.css";
+
 [x-cloak] { display: none !important; }
 
 /* ── Marca KraftDo ────────────────────────────────────────────────────────

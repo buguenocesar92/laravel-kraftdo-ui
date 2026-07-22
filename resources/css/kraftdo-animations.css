@@ -1,0 +1,25 @@
+/* ============================================================================
+   Animaciones de marca KraftDo.
+   Sin librerías: los renders NFC son snapshots self-contained servidos por
+   Cloudflare y no pueden cargar scripts de terceros.
+   ========================================================================== */
+
+/* Entrada al hacer scroll. El JS añade .is-in cuando el elemento es visible. */
+.kd-reveal { opacity: 0; transform: translateY(16px);
+             transition: opacity .6s var(--kd-ease, ease), transform .6s var(--kd-ease, ease); }
+.kd-reveal.is-in { opacity: 1; transform: none; }
+
+/* Flotación sutil para elementos destacados. */
+.kd-float { animation: kd-float 4s ease-in-out infinite; }
+@keyframes kd-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* Brillo sobre degradados de marca. */
+.kd-shimmer { background: var(--kd-grad-vibrant); background-size: 200% 100%;
+              animation: kd-shimmer 3s linear infinite; }
+@keyframes kd-shimmer { to { background-position: -200% 0; } }
+
+/* Accesibilidad: quien pide menos movimiento no recibe ninguno. */
+@media (prefers-reduced-motion: reduce) {
+    .kd-reveal { opacity: 1; transform: none; transition: none; }
+    .kd-float, .kd-shimmer { animation: none; }
+}
