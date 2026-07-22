@@ -1,0 +1,21 @@
+{
+    "name": "kraftdo/laravel-kraftdo-ui",
+    "description": "Sistema de diseño y componentes Blade del ecosistema KraftDo (tokens de marca, temas dark/light, componentes de panel y de producto).",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^12.0|^13.0",
+        "illuminate/view": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "laravel/pint": "^1.18"
+    },
+    "autoload": { "psr-4": { "Kraftdo\\Ui\\": "src/" } },
+    "autoload-dev": { "psr-4": { "Kraftdo\\Ui\\Tests\\": "tests/" } },
+    "extra": { "laravel": { "providers": ["Kraftdo\\Ui\\KraftdoUiServiceProvider"] } },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
