@@ -49,14 +49,14 @@ activadores de clase/atributo (ganan sobre el OS) → `data-muni-theme` explíci
 ## Instalación
 
 ```bash
-composer require muni-graneros/laravel-kraftdo-ui
+composer require kraftdo/laravel-kraftdo-ui
 ```
 
 El repo es privado (SSH). En el `composer.json` del proyecto:
 
 ```json
 "repositories": {
-    "kraftdo-ui": { "type": "vcs", "url": "https://github.com/muni-graneros/laravel-kraftdo-ui.git" }
+    "kraftdo-ui": { "type": "vcs", "url": "https://github.com/buguenocesar92/laravel-kraftdo-ui.git" }
 }
 ```
 
@@ -64,8 +64,8 @@ En `resources/css/app.css`:
 
 ```css
 @import "tailwindcss";
-@import "../../vendor/muni-graneros/laravel-kraftdo-ui/resources/css/kraftdo-ui.css";
-@source "../../vendor/muni-graneros/laravel-kraftdo-ui/resources/views/**/*.blade.php";
+@import "../../vendor/kraftdo/laravel-kraftdo-ui/resources/css/kraftdo-ui.css";
+@source "../../vendor/kraftdo/laravel-kraftdo-ui/resources/views/**/*.blade.php";
 ```
 
 Para personalizar los tokens por proyecto, publica el CSS y edítalo:

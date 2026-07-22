@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Registra el sistema de diseño municipal: los componentes Blade anónimos bajo el
- * namespace `muni` (`<x-kd::kpi>`) y publica el CSS de tokens para que la app lo
+ * Registra el sistema de diseño de KraftDo: los componentes Blade anónimos bajo el
+ * namespace `kd` (`<x-kd::kpi>`) y publica el CSS de tokens para que la app lo
  * importe en su pipeline de Tailwind v4.
  */
 class KraftdoUiServiceProvider extends ServiceProvider
@@ -31,7 +31,7 @@ class KraftdoUiServiceProvider extends ServiceProvider
             __DIR__.'/../resources/images' => public_path('vendor/kraftdo-ui'),
         ], 'kraftdo-ui-images');
 
-        // Tema Filament municipal (CSS plano) → public/vendor/kraftdo-ui/filament.css.
+        // Tema Filament de KraftDo (CSS plano) → public/vendor/kraftdo-ui/filament.css.
         // Se inyecta con un render hook para que los paneles no se vean genéricos:
         //   php artisan vendor:publish --tag=kraftdo-ui-filament --force
         $this->publishes([

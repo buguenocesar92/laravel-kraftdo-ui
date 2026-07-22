@@ -25,10 +25,10 @@ En `resources/js/app.js` del sistema:
 
 ```js
 // Tiempo real
-import '../../vendor/muni-graneros/laravel-kraftdo-ui/resources/js/echo.js';
+import '../../vendor/kraftdo/laravel-kraftdo-ui/resources/js/echo.js';
 
 // Mapa de personas (donde aplique)
-import '../../vendor/muni-graneros/laravel-kraftdo-ui/resources/js/mapa-personas.js';
+import '../../vendor/kraftdo/laravel-kraftdo-ui/resources/js/mapa-personas.js';
 ```
 
 Vite resuelve la ruta relativa a `vendor/` y bundlea el módulo; sus `import` de librerías
