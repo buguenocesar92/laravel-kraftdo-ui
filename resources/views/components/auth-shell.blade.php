@@ -37,7 +37,7 @@
         <div style="position:relative;">
             {{ $aside ?? '' }}
             @unless (isset($aside))
-                <div style="font-family:var(--kd-font-mono);font-size:12px;color:var(--kd-accent);letter-spacing:.08em;margin-bottom:14px;">ACCESO SEGURO</div>
+                <div style="font-family:var(--kd-font-mono);font-size:12px;color:var(--kd-accent-text);letter-spacing:.08em;margin-bottom:14px;">ACCESO SEGURO</div>
                 <div style="font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.02em;max-width:20ch;">Trámites de la ciudad, en un solo lugar.</div>
                 <p style="font-size:13.5px;color:var(--kd-muted);line-height:1.6;max-width:36ch;margin-top:12px;">Tus datos están protegidos y no se comparten con terceros.</p>
             @endunless

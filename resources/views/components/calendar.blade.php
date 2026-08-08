@@ -50,7 +50,7 @@
         .kd-cal__head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
         .kd-cal__title { font-size:13.5px; font-weight:700; text-transform:capitalize; }
         .kd-cal__nav { width:30px; height:30px; border:1px solid var(--kd-border); background:var(--kd-surface); color:var(--kd-text); border-radius:var(--kd-radius-sm); cursor:pointer; font-size:16px; transition:.15s; }
-        .kd-cal__nav:hover { border-color:var(--kd-accent); color:var(--kd-accent); }
+        .kd-cal__nav:hover { border-color:var(--kd-accent); color:var(--kd-accent-text); }
         .kd-cal__grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
         .kd-cal__dow { text-align:center; font-family:var(--kd-font-mono); font-size:10.5px; font-weight:600; color:var(--kd-hint); padding-bottom:6px; }
         .kd-cal__day { aspect-ratio:1; border:none; background:transparent; color:var(--kd-text); border-radius:var(--kd-radius-sm); font-family:var(--kd-font-mono); font-size:12.5px; cursor:pointer; transition:background var(--kd-dur) var(--kd-ease); }
