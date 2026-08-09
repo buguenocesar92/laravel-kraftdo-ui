@@ -29,9 +29,13 @@
 /* Logo con resplandor de marca (si el panel define uno vía brandLogo()). */
 .fi-sidebar-header img, .fi-topbar-logo img, .fi-logo img { filter:drop-shadow(0 0 10px color-mix(in srgb, var(--kd-accent) 45%, transparent)); }
 
-/* Etiquetas de grupo: rótulo en el acento de marca con tick */
+/* Etiquetas de grupo: rótulo en el acento de marca con tick.
+   Fijo a #34d399 (el --kd-accent-text del preset dark), mismo motivo que el
+   resto de la barra: var(--kd-accent-text) seguiría el toggle claro/oscuro y
+   en modo claro daría el verde OSCURO (#047857, pensado para fondo blanco)
+   sobre esta barra que siempre es oscura — ilegible. */
 .fi-sidebar-group-label {
-    position:relative; color:var(--kd-accent) !important; font-weight:800;
+    position:relative; color:#34d399 !important; font-weight:800;
     letter-spacing:.1em; text-transform:uppercase; font-size:.64rem; padding-inline-start:.9rem; opacity:.95;
 }
 .fi-sidebar-group-label::before{ content:""; position:absolute; inset-inline-start:0; top:50%; transform:translateY(-50%); width:5px; height:5px; border-radius:1px; background:var(--kd-accent); box-shadow:0 0 6px color-mix(in srgb, var(--kd-accent) 70%, transparent); }
@@ -43,7 +47,8 @@
 .fi-sidebar-item-icon { color:#94a3b8 !important; }
 .fi-sidebar-item-btn:hover { background:rgba(255,255,255,.06) !important; }
 .fi-sidebar-item-btn:hover .fi-sidebar-item-label { color:#fff !important; }
-.fi-sidebar-item-btn:hover .fi-sidebar-item-icon { color:var(--kd-accent) !important; }
+/* Fijo, mismo motivo que .fi-sidebar-group-label arriba. */
+.fi-sidebar-item-btn:hover .fi-sidebar-item-icon { color:#34d399 !important; }
 
 /* Ítem ACTIVO: píldora con brillo del acento de marca y resplandor */
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
@@ -53,7 +58,8 @@
 }
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-label,
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn { color:#fff !important; }
-.fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon { color:var(--kd-accent) !important; }
+/* Fijo, mismo motivo que .fi-sidebar-group-label arriba. */
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn .fi-sidebar-item-icon { color:#34d399 !important; }
 .fi-sidebar-item.fi-active .fi-sidebar-item-btn::before{ content:""; position:absolute; inset-inline-start:-4px; top:8px; bottom:8px; width:4px; border-radius:4px; background:linear-gradient(180deg,var(--kd-accent),var(--kd-accent-strong)); box-shadow:0 0 10px color-mix(in srgb, var(--kd-accent) 70%, transparent); }
 /* Badges del sidebar (contadores) */
 .fi-sidebar-item-badge { background:var(--kd-accent) !important; color:var(--kd-on-accent) !important; font-weight:800; }
@@ -71,7 +77,9 @@
 .fi-body, .fi-main-ctn, .fi-main { background-color:var(--kd-bg) !important; }
 
 /* Cabecera de página: título grande + regla acentuada */
-.fi-header-heading { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-strong) !important; font-size:1.9rem !important; }
+/* color: usa --kd-accent-text (rol TEXTO), no --kd-accent-strong (rol FONDO
+   del hover del botón primario) — mismo token, roles distintos, no mezclar. */
+.fi-header-heading { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-text) !important; font-size:1.9rem !important; }
 .fi-main > .fi-header, .fi-page > .fi-header { position:relative; padding-bottom:1rem; }
 .fi-main > .fi-header::after, .fi-page > .fi-header::after { content:""; position:absolute; left:0; bottom:0; width:72px; height:3px; border-radius:2px; background:var(--kd-grad-primary); }
 
@@ -82,7 +90,8 @@
 }
 .fi-wi-stats-overview-stat { position:relative; overflow:hidden; border-top:3px solid var(--kd-accent-strong) !important; background:linear-gradient(180deg,color-mix(in srgb,var(--kd-accent-strong) 5%,var(--kd-surface)),var(--kd-surface)) !important; }
 .fi-wi-stats-overview-stat::after{ content:""; position:absolute; top:0; right:0; width:130px; height:130px; pointer-events:none; background:radial-gradient(circle at 100% 0, color-mix(in srgb,var(--kd-accent-strong) 12%,transparent), transparent 70%); }
-.fi-wi-stats-overview-stat-value { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-strong) !important; font-size:2.4rem !important; line-height:1.05; }
+/* color: mismo motivo que .fi-header-heading arriba — rol TEXTO, no FONDO. */
+.fi-wi-stats-overview-stat-value { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-text) !important; font-size:2.4rem !important; line-height:1.05; }
 .fi-wi-stats-overview-stat-label { font-weight:600; color:var(--kd-text); }
 .fi-section-header-heading { position:relative; padding-inline-start:.85rem; font-weight:700; color:var(--kd-text); }
 .fi-section-header-heading::before{ content:""; position:absolute; inset-inline-start:0; top:50%; transform:translateY(-50%); width:4px; height:1.05em; border-radius:2px; background:linear-gradient(180deg,var(--kd-accent),var(--kd-accent-strong)); }

@@ -37,7 +37,7 @@
             border:1.5px dashed var(--kd-border-2); border-radius:var(--kd-radius); background:var(--kd-surface-2); cursor:pointer;
             font-family:var(--kd-font-sans); transition:border-color var(--kd-dur) var(--kd-ease),background var(--kd-dur) var(--kd-ease); }
         .kd-dz:hover, .kd-dz--over { border-color:var(--kd-accent); background:var(--kd-accent-soft); }
-        .kd-dz__icon { display:inline-flex; color:var(--kd-accent); }
+        .kd-dz__icon { display:inline-flex; color:var(--kd-accent-text); }
         .kd-dz__label { font-size:13px; font-weight:600; color:var(--kd-text); }
         .kd-dz__hint { font-size:11.5px; color:var(--kd-hint); }
         .kd-dz__file { display:inline-flex; align-items:center; gap:10px; padding:6px 12px; margin-top:4px; border-radius:999px; background:var(--kd-surface); border:1px solid var(--kd-border); font-size:12.5px; font-weight:500; color:var(--kd-text); }

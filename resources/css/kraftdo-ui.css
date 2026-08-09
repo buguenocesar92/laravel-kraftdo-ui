@@ -56,19 +56,34 @@
 
     --kd-text: #1a1d24;
     --kd-muted: #5a6070;
-    --kd-hint: #6b7280;
+    /* #6b7280 daba 4.47:1 sobre --kd-bg (bajo el piso de 4.5 de WCAG AA). */
+    --kd-hint: #5d6470;
     --kd-border: #e0e3ea;
     --kd-border-2: #c8ccd6;
 
     --kd-accent: var(--kd-green);
-    --kd-accent-strong: var(--kd-green-dark);
+    /* Rol: FONDO (hover del botón primario, resplandores, bordes de acento).
+       NUNCA se usa como color de texto — para eso existe --kd-accent-text.
+       #059669 (var(--kd-green-dark)) porque con --kd-on-accent (#0f172a)
+       encima da 4.74:1. #047857 —el valor pensado para el rol de TEXTO— hunde
+       este rol a 3.26:1: por confundir los dos roles en un mismo token se coló
+       una regresión de contraste en el hover del botón primario. No reusar el
+       valor de --kd-accent-text aquí sin volver a medir contra --kd-on-accent. */
+    --kd-accent-strong: #059669;
+    /* Rol: TEXTO (verde de marca usado como color de letra, nunca como fondo/
+       borde/relleno: para eso existe --kd-accent-strong, que no se toca).
+       --kd-accent como color de letra da 2.35:1/2.54:1; este token es la
+       variante legible: #047857 da 5.07:1 sobre --kd-bg y 5.48:1 sobre
+       --kd-surface. No reusar el valor de --kd-accent-strong aquí. */
+    --kd-accent-text: #047857;
     --kd-accent-soft: #ecfdf5;
     --kd-on-accent: var(--kd-dark);
 
     --kd-ok-fg: #0f7a5a;
     --kd-ok-bg: #e2f5ee;
     --kd-ok-border: #0f7a5a;
-    --kd-warn-fg: #c47a10;
+    /* #c47a10 daba 3.16:1/3.42:1 como texto. */
+    --kd-warn-fg: #9a6200;
     --kd-warn-bg: #fef3dc;
     --kd-warn-border: #c47a10;
     --kd-danger-fg: #b03030;
@@ -110,11 +125,19 @@
         --kd-panel: var(--kd-navy);
         --kd-text: #f8fafc;
         --kd-muted: #94a3b8;
-        --kd-hint: #4a5a74;
+        /* #4a5a74 daba 2.56:1/2.09:1 como texto. */
+        --kd-hint: #94a3b8;
         --kd-border: #2a3347;
         --kd-border-2: #3a4560;
         --kd-accent: var(--kd-green);
-        --kd-accent-strong: var(--kd-green-dark);
+        /* Roles FONDO (accent-strong) y TEXTO (accent-text): ver nota en el
+           :root light. Acá comparten el mismo hex porque #34d399 SÍ cumple
+           los dos roles en oscuro (medido, no copiado): con --kd-on-accent
+           (#0f172a) encima da 9.29:1 como fondo, y sobre --kd-bg/--kd-surface
+           oscuros da >9:1 como texto. Si se cambia este valor, hay que volver
+           a medir ambos roles por separado — podrían divergir como en claro. */
+        --kd-accent-strong: #34d399;
+        --kd-accent-text: #34d399;
         --kd-accent-soft: rgba(16, 185, 129, .12);
         --kd-on-accent: var(--kd-dark);
         --kd-ok-fg: #22c55e;
@@ -123,11 +146,13 @@
         --kd-warn-fg: #f59e0b;
         --kd-warn-bg: #2d1d00;
         --kd-warn-border: #92400e;
-        --kd-danger-fg: #ef4444;
+        /* #ef4444 daba 3.89:1 sobre --kd-surface. */
+        --kd-danger-fg: #f87171;
         --kd-on-danger: var(--kd-dark); /* texto sobre el relleno de peligro solido (hover); calculado AA */
         --kd-danger-bg: #2d0d0d;
         --kd-danger-border: #991b1b;
-        --kd-info-fg: var(--kd-blue);
+        /* var(--kd-blue) daba 3.98:1 sobre --kd-surface como texto. */
+        --kd-info-fg: #60a5fa;
         --kd-info-bg: #0d1a2d;
         --kd-info-border: #1e3a5f;
         --kd-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.35);
@@ -154,11 +179,19 @@
     --kd-panel: var(--kd-navy);
     --kd-text: #f8fafc;
     --kd-muted: #94a3b8;
-    --kd-hint: #4a5a74;
+    /* #4a5a74 daba 2.56:1/2.09:1 como texto. */
+    --kd-hint: #94a3b8;
     --kd-border: #2a3347;
     --kd-border-2: #3a4560;
     --kd-accent: var(--kd-green);
-    --kd-accent-strong: var(--kd-green-dark);
+    /* Roles FONDO (accent-strong) y TEXTO (accent-text): ver nota en el
+       :root light. Acá comparten el mismo hex porque #34d399 SÍ cumple los
+       dos roles en oscuro (medido, no copiado): con --kd-on-accent (#0f172a)
+       encima da 9.29:1 como fondo, y sobre --kd-bg/--kd-surface oscuros da
+       >9:1 como texto. Si se cambia este valor, hay que volver a medir ambos
+       roles por separado — podrían divergir como pasó en claro. */
+    --kd-accent-strong: #34d399;
+    --kd-accent-text: #34d399;
     --kd-accent-soft: rgba(16, 185, 129, .12);
     --kd-on-accent: var(--kd-dark);
     --kd-ok-fg: #22c55e;
@@ -167,11 +200,13 @@
     --kd-warn-fg: #f59e0b;
     --kd-warn-bg: #2d1d00;
     --kd-warn-border: #92400e;
-    --kd-danger-fg: #ef4444;
+    /* #ef4444 daba 3.89:1 sobre --kd-surface. */
+    --kd-danger-fg: #f87171;
     --kd-on-danger: var(--kd-dark); /* texto sobre el relleno de peligro solido (hover); calculado AA */
     --kd-danger-bg: #2d0d0d;
     --kd-danger-border: #991b1b;
-    --kd-info-fg: var(--kd-blue);
+    /* var(--kd-blue) daba 3.98:1 sobre --kd-surface como texto. */
+    --kd-info-fg: #60a5fa;
     --kd-info-bg: #0d1a2d;
     --kd-info-border: #1e3a5f;
     --kd-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.35);
@@ -195,17 +230,21 @@
     --kd-panel: #ffffff;
     --kd-text: #1a1d24;
     --kd-muted: #5a6070;
-    --kd-hint: #6b7280;
+    /* #6b7280 daba 4.47:1 sobre --kd-bg (bajo el piso de 4.5 de WCAG AA). */
+    --kd-hint: #5d6470;
     --kd-border: #e0e3ea;
     --kd-border-2: #c8ccd6;
     --kd-accent: var(--kd-green);
-    --kd-accent-strong: var(--kd-green-dark);
+    /* Ver nota de roles (FONDO vs TEXTO) en el :root light. */
+    --kd-accent-strong: #059669;
+    --kd-accent-text: #047857;
     --kd-accent-soft: #ecfdf5;
     --kd-on-accent: var(--kd-dark);
     --kd-ok-fg: #0f7a5a;
     --kd-ok-bg: #e2f5ee;
     --kd-ok-border: #0f7a5a;
-    --kd-warn-fg: #c47a10;
+    /* #c47a10 daba 3.16:1/3.42:1 como texto. */
+    --kd-warn-fg: #9a6200;
     --kd-warn-bg: #fef3dc;
     --kd-warn-border: #c47a10;
     --kd-danger-fg: #b03030;

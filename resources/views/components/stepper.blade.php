@@ -44,7 +44,7 @@
         .kd-step__body { display:flex; flex-direction:column; min-width:0; }
         .kd-step__label { font-size:12.5px; font-weight:600; color:var(--kd-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .kd-step__hint { font-size:11px; color:var(--kd-hint); }
-        .kd-step--active .kd-step__marker { border-color:var(--kd-accent); color:var(--kd-accent); box-shadow:var(--kd-ring); }
+        .kd-step--active .kd-step__marker { border-color:var(--kd-accent); color:var(--kd-accent-text); box-shadow:var(--kd-ring); }
         .kd-step--active .kd-step__label { color:var(--kd-text); }
         .kd-step--done .kd-step__marker { border-color:var(--kd-accent); background:var(--kd-accent); color:var(--kd-on-accent); }
         .kd-step--done .kd-step__label { color:var(--kd-text); }

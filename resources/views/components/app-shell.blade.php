@@ -17,7 +17,7 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; }
         body { margin: 0; background: var(--kd-bg); color: var(--kd-text); font-family: var(--kd-font-sans); }
-        a { color: var(--kd-accent); }
+        a { color: var(--kd-accent-text); }
     </style>
 </head>
 <body>

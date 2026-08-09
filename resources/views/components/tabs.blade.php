@@ -35,7 +35,7 @@
             transition:color var(--kd-dur) var(--kd-ease); }
         .kd-tab:hover { color:var(--kd-text); }
         .kd-tab:focus-visible { outline:none;box-shadow:var(--kd-ring);border-radius:var(--kd-radius-sm); }
-        .kd-tab--on { color:var(--kd-accent); }
+        .kd-tab--on { color:var(--kd-accent-text); }
         .kd-tab--on::after { content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;
             background:var(--kd-accent);border-radius:2px 2px 0 0; }
     </style>

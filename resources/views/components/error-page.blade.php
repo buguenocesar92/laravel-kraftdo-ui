@@ -26,7 +26,7 @@
 <body>
     <div class="kd-err__grid"></div>
     <div class="kd-err__card">
-        <div style="font-family:var(--kd-font-mono);font-size:clamp(80px,20vw,140px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--kd-accent);text-shadow:var(--kd-glow);">{{ $code }}</div>
+        <div style="font-family:var(--kd-font-mono);font-size:clamp(80px,20vw,140px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--kd-accent-text);text-shadow:var(--kd-glow);">{{ $code }}</div>
         <h1 style="margin:14px 0 0;font-size:22px;font-weight:800;letter-spacing:-.02em;">{{ $title }}</h1>
         <p style="margin:10px 0 26px;font-size:14px;color:var(--kd-muted);line-height:1.6;">{{ $message }}</p>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">

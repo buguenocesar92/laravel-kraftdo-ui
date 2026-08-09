@@ -24,7 +24,7 @@
             transition:background var(--kd-dur) var(--kd-ease),color var(--kd-dur) var(--kd-ease); }
         .kd-nav-item:hover { background:var(--kd-surface-2); color:var(--kd-text); }
         .kd-nav-item:focus-visible { outline:none; box-shadow:var(--kd-ring); }
-        .kd-nav-item--active { background:var(--kd-accent-soft); color:var(--kd-accent); font-weight:600; }
+        .kd-nav-item--active { background:var(--kd-accent-soft); color:var(--kd-accent-text); font-weight:600; }
         .kd-nav-item__icon { display:inline-flex; flex-shrink:0; width:18px; height:18px; }
         .kd-nav-item__icon svg { width:18px; height:18px; }
         .kd-nav-item__badge { font-family:var(--kd-font-mono); font-size:10.5px; font-weight:600; padding:1px 7px; border-radius:999px;
