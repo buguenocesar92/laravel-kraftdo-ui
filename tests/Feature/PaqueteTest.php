@@ -50,7 +50,19 @@ it('ningún par texto/fondo baja de WCAG AA', function () {
     // dos bloques "light" se desincroniza, este test tiene que notarlo.
     $css = file_get_contents(__DIR__.'/../../resources/css/kraftdo-ui.css');
 
-    $pares = [['--kd-text', '--kd-bg'], ['--kd-muted', '--kd-bg'], ['--kd-on-accent', '--kd-accent'], ['--kd-on-danger', '--kd-danger-fg']];
+    $pares = [
+        ['--kd-text', '--kd-bg'],
+        ['--kd-muted', '--kd-bg'],
+        ['--kd-on-accent', '--kd-accent'],
+        ['--kd-on-danger', '--kd-danger-fg'],
+        // Fondos que solo existen en :hover/:active — el test de abajo (derivado
+        // por regex de la propiedad `color:`) solo mide contra --kd-bg/--kd-surface,
+        // los fondos ESTÁTICOS de página, así que un fondo dinámico con su propio
+        // texto no entra ahí. Hay que listarlos a mano, igual que los 4 de arriba.
+        ['--kd-on-accent', '--kd-accent-strong'], // .kd-btn--primary:hover — el hover REAL del botón primario
+        ['--kd-text', '--kd-surface-2'], // .kd-btn--ghost:hover, .kd-nav-item:hover, .kd-page:hover
+        ['--kd-text', '--kd-surface-3'], // .kd-btn--subtle:hover, .kd-drawer__x:hover, .kd-modal-x:hover
+    ];
     $malos = [];
 
     foreach ([':root', '.dark', '[data-kd-theme="light"]'] as $tema) {
@@ -94,7 +106,14 @@ it('ningún token usado como color de texto en los componentes baja de WCAG AA',
         // `border-left-color:`, etc. — esos no son texto, son relleno o borde,
         // y no tienen que cumplir contraste de texto (4.5:1). Solo la propiedad
         // `color` desnuda pinta letras.
-        if (preg_match_all('/(?<![a-zA-Z-])color:\s*var\(\s*(--kd-[a-z-]+)\s*\)/', $contenido, $m)) {
+        //
+        // [a-z0-9-]+ (con dígitos): la clase original [a-z-]+ no matcheaba
+        // tokens como --kd-border-2 o --kd-surface-3 — el barrido se enteraba
+        // de un token nuevo "solo" excepto si tenía un número en el nombre, que
+        // es justo el patrón de los tokens de superficie/borde apilados. El
+        // unset(--kd-border-2) de abajo era un no-op con la regex vieja: la
+        // clave nunca llegaba a poblarse, así que excluirla no hacía nada.
+        if (preg_match_all('/(?<![a-zA-Z-])color:\s*var\(\s*(--kd-[a-z0-9-]+)\s*\)/', $contenido, $m)) {
             foreach ($m[1] as $token) {
                 $tokens[$token] = true;
             }
@@ -114,6 +133,12 @@ it('ningún token usado como color de texto en los componentes baja de WCAG AA',
     // --kd-border-2 se usa como relleno de un ícono decorativo (estrella sin
     // marcar), no como texto legible. Ninguno de los dos se renderiza sobre
     // --kd-bg/--kd-surface, así que se excluyen por el mismo motivo de arriba.
+    //
+    // Con la regex ya arreglada para dígitos, este unset(--kd-border-2) por fin
+    // hace algo (antes nunca se poblaba, ver nota arriba). Sigue siendo
+    // necesario: medido como si fuera texto da menos de 2:1 contra
+    // --kd-bg/--kd-surface en los tres temas (p. ej. 1.49:1 en claro) —
+    // fallaría el test, pero nunca se renderiza como texto en pantalla.
     unset($tokens['--kd-bg'], $tokens['--kd-border-2']);
 
     // Si la extracción se rompe (p. ej. cambia el formato del CSS) y esto queda
@@ -141,4 +166,27 @@ it('las animaciones se anulan con prefers-reduced-motion', function () {
 
     expect($css)->toContain('prefers-reduced-motion: reduce')
         ->and($css)->toContain('animation: none');
+});
+
+it('el verde fijo de la barra lateral de Filament sigue al --kd-accent-text oscuro', function () {
+    // La barra lateral de Filament es SIEMPRE oscura (no sigue el toggle
+    // claro/oscuro, ver la nota al inicio de kraftdo-ui-filament.css), así que
+    // sus 3 usos de verde van en hex fijo (#34d399) en vez de var(--kd-*): un
+    // var() ahí seguiría el toggle y en modo claro daría el verde OSCURO
+    // (pensado para fondo blanco) sobre una barra que siempre es oscura —
+    // ilegible. Eso es correcto, pero significa que estos 3 puntos no pasan
+    // por ningún token y ningún otro test los toca: si el verde de marca en
+    // oscuro cambia, quedan desincronizados en silencio. Este test ata el hex
+    // fijo al valor real de --kd-accent-text en el tema oscuro, para que
+    // cambiar uno sin el otro rompa el build en vez de quedar como una deriva
+    // visual que nadie nota.
+    $cssTokens = file_get_contents(__DIR__.'/../../resources/css/kraftdo-ui.css');
+    $cssFilament = file_get_contents(__DIR__.'/../../resources/css/kraftdo-ui-filament.css');
+
+    $tokenOscuro = kdToken($cssTokens, '.dark', '--kd-accent-text');
+
+    // Cuenta declaraciones `color:#34d399`, no el comentario de la línea 33
+    // que también menciona el hex (substr_count contaría 4, no 3).
+    expect($tokenOscuro)->toBe('#34d399')
+        ->and(substr_count($cssFilament, 'color:#34d399'))->toBe(3);
 });

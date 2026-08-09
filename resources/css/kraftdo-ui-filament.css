@@ -77,7 +77,9 @@
 .fi-body, .fi-main-ctn, .fi-main { background-color:var(--kd-bg) !important; }
 
 /* Cabecera de página: título grande + regla acentuada */
-.fi-header-heading { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-strong) !important; font-size:1.9rem !important; }
+/* color: usa --kd-accent-text (rol TEXTO), no --kd-accent-strong (rol FONDO
+   del hover del botón primario) — mismo token, roles distintos, no mezclar. */
+.fi-header-heading { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-text) !important; font-size:1.9rem !important; }
 .fi-main > .fi-header, .fi-page > .fi-header { position:relative; padding-bottom:1rem; }
 .fi-main > .fi-header::after, .fi-page > .fi-header::after { content:""; position:absolute; left:0; bottom:0; width:72px; height:3px; border-radius:2px; background:var(--kd-grad-primary); }
 
@@ -88,7 +90,8 @@
 }
 .fi-wi-stats-overview-stat { position:relative; overflow:hidden; border-top:3px solid var(--kd-accent-strong) !important; background:linear-gradient(180deg,color-mix(in srgb,var(--kd-accent-strong) 5%,var(--kd-surface)),var(--kd-surface)) !important; }
 .fi-wi-stats-overview-stat::after{ content:""; position:absolute; top:0; right:0; width:130px; height:130px; pointer-events:none; background:radial-gradient(circle at 100% 0, color-mix(in srgb,var(--kd-accent-strong) 12%,transparent), transparent 70%); }
-.fi-wi-stats-overview-stat-value { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-strong) !important; font-size:2.4rem !important; line-height:1.05; }
+/* color: mismo motivo que .fi-header-heading arriba — rol TEXTO, no FONDO. */
+.fi-wi-stats-overview-stat-value { font-weight:800 !important; letter-spacing:-.02em; color:var(--kd-accent-text) !important; font-size:2.4rem !important; line-height:1.05; }
 .fi-wi-stats-overview-stat-label { font-weight:600; color:var(--kd-text); }
 .fi-section-header-heading { position:relative; padding-inline-start:.85rem; font-weight:700; color:var(--kd-text); }
 .fi-section-header-heading::before{ content:""; position:absolute; inset-inline-start:0; top:50%; transform:translateY(-50%); width:4px; height:1.05em; border-radius:2px; background:linear-gradient(180deg,var(--kd-accent),var(--kd-accent-strong)); }
