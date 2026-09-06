@@ -2,3 +2,12 @@
 composer.lock
 /.phpunit.cache/
 demo/vendor/
+
+# Residuos del flujo de trabajo con agentes (Claude Code / superpowers): no son
+# parte del paquete y no deben viajar en el historial de una librería que
+# consumen 4 sistemas.
+.superpowers/
+.claude/worktrees/
+.envrc
+.direnv/
+/test-results
