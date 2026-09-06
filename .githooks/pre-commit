@@ -64,4 +64,19 @@ for archivo in "${STAGED_PHP[@]}"; do
 done
 [ "$reformateados" -eq 1 ] && echo "pre-commit: Pint aplicó formato y se incluyó en el commit."
 
+# ── 3. Análisis estático (PHPStan nivel 8) ────────────────────────────────────
+# Solo sobre lo staged bajo src/ (lo que analiza phpstan.neon): un error de
+# tipos que entra al historial lo arrastran los cuatro sistemas que consumen
+# este paquete. Sin baseline: si falla, se corrige, no se anota.
+mapfile -t STAGED_SRC < <(printf '%s\n' "${STAGED_PHP[@]}" | grep '^src/' || true)
+PHPSTAN="./vendor/bin/phpstan"
+if [ ${#STAGED_SRC[@]} -gt 0 ] && [ -x "$PHPSTAN" ]; then
+    echo "pre-commit: PHPStan sobre ${#STAGED_SRC[@]} archivo(s) de src/…"
+    if ! "$PHPSTAN" analyse --memory-limit=1G --no-progress "${STAGED_SRC[@]}"; then
+        echo "" >&2
+        echo "❌ pre-commit: PHPStan encontró errores en lo staged. El commit se canceló." >&2
+        exit 1
+    fi
+fi
+
 exit 0
