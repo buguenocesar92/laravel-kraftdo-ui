@@ -2,16 +2,25 @@
 # ──────────────────────────────────────────────────────────────────────────────
 # pre-push — KraftDo SpA
 #
-# Bloquea el envío directo a la rama de producción (`main` / `master`). Estos
-# repositorios son privados en una cuenta sin protección de rama del lado del
-# servidor, así que el único corte posible es local. El flujo es
-# rama de trabajo → develop → main por PR, nunca un push directo.
+# 1) Envío directo a main/master: SIEMPRE bloqueado. Estos repositorios son
+#    privados en una cuenta sin protección de rama del lado del servidor, así
+#    que el único corte posible es local. El flujo es rama de trabajo →
+#    develop → main por PR, nunca un push directo. Sin variable de entorno que
+#    lo desactive: si de verdad hace falta saltarlo, --no-verify deja huella.
 #
-# Si de verdad hace falta saltarlo:  git push --no-verify
+# 2) Suite: solo al publicar a develop/main (main igual queda rechazado por el
+#    punto 1, pero si algún día se abre una excepción puntual con --no-verify,
+#    que corra igual la suite antes deja constancia de en qué estado estaba).
+#    En ramas de trabajo el envío es frecuente y la suite tarda: cobrárselo a
+#    cada WIP haría que se termine saltando el hook siempre.
+#
+# Saltárselo puntualmente:      git push --no-verify
+# Saltarse solo los tests:      export SKIP_PREPUSH_TESTS=1
 # ──────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
 destino_protegido=""
+publica_rama_compartida=0
 
 # git entrega por stdin una línea por ref a enviar:
 #   <ref local> <sha local> <ref remota> <sha remoto>
@@ -19,6 +28,10 @@ while read -r _ref_local _sha_local ref_remota _sha_remoto; do
     case "$ref_remota" in
         refs/heads/main | refs/heads/master)
             destino_protegido="${ref_remota#refs/heads/}"
+            publica_rama_compartida=1
+            ;;
+        refs/heads/develop)
+            publica_rama_compartida=1
             ;;
     esac
 done
@@ -30,5 +43,28 @@ if [ -n "$destino_protegido" ]; then
     echo "   Si de verdad hace falta:  git push --no-verify" >&2
     exit 1
 fi
+
+if [ "$publica_rama_compartida" -ne 1 ]; then
+    exit 0
+fi
+
+if [ "${SKIP_PREPUSH_TESTS:-0}" = "1" ]; then
+    echo "pre-push: tests omitidos (SKIP_PREPUSH_TESTS=1)."
+    exit 0
+fi
+
+if [ ! -x ./vendor/bin/pest ]; then
+    echo "pre-push: no encuentro vendor/bin/pest (¿corriste composer install?); NO se corrió la suite." >&2
+    exit 0
+fi
+
+echo "pre-push: corriendo la suite antes de publicar… — omitir con SKIP_PREPUSH_TESTS=1"
+if ! XDEBUG_MODE=off ./vendor/bin/pest; then
+    echo "" >&2
+    echo "❌ pre-push: hay tests en rojo. El envío se canceló." >&2
+    echo "   Arréglalos, o usa 'git push --no-verify' si sabes lo que haces." >&2
+    exit 1
+fi
+echo "✅ pre-push: suite en verde."
 
 exit 0

@@ -17,6 +17,14 @@
     "autoload": { "psr-4": { "Kraftdo\\Ui\\": "src/" } },
     "autoload-dev": { "psr-4": { "Kraftdo\\Ui\\Tests\\": "tests/" } },
     "extra": { "laravel": { "providers": ["Kraftdo\\Ui\\KraftdoUiServiceProvider"] } },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"if (is_dir('.git')) { exec('git config core.hooksPath .githooks'); }\""
+        ],
+        "post-update-cmd": [
+            "@php -r \"if (is_dir('.git')) { exec('git config core.hooksPath .githooks'); }\""
+        ]
+    },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true,
