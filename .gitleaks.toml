@@ -1,0 +1,15 @@
+# Configuración del escáner de secretos.
+#
+# Parte de las reglas por defecto de gitleaks y solo agrega excepciones para
+# lo que NO es una credencial: documentación y datos de prueba. La lista se
+# mantiene corta a propósito: cada excepción es un lugar donde el escáner deja
+# de mirar.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Ejemplos de documentación y valores ficticios de las pruebas"
+paths = [
+    '''(^|/)docs/''',
+    '''(^|/)tests/''',
+]

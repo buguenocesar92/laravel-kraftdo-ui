@@ -33,3 +33,34 @@ jobs:
         run: vendor/bin/pint --test
       - name: Tests (Pest)
         run: vendor/bin/pest
+      - name: Auditoría de dependencias (composer audit)
+        # Bloqueante: un CVE conocido en una dependencia no puede entrar a
+        # main sin que nadie lo vea. --no-dev porque lo que se publica y
+        # consumen los 4 sistemas es el código de producción, no las
+        # herramientas de desarrollo del propio paquete.
+        run: composer audit --no-dev
+
+  secretos:
+    name: Secretos (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # sin el historial completo, `gitleaks git` no ve nada
+
+      # Binario oficial en vez del action: el action de gitleaks pide licencia
+      # para organizaciones, y así la versión queda fijada y a la vista.
+      - name: Instalar gitleaks
+        env:
+          VERSION: 8.30.1
+        run: |
+          set -euo pipefail
+          curl -sL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Buscar credenciales en el árbol de trabajo
+        run: gitleaks dir . --no-banner --redact --config .gitleaks.toml
+
+      - name: Buscar credenciales en el historial
+        run: gitleaks git . --no-banner --redact --config .gitleaks.toml
