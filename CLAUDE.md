@@ -25,6 +25,16 @@ de marca municipal por los de KraftDo.
 `--kd-green #10b981` · `--kd-lime #32ff32` · `--kd-blue #3b82f6` ·
 `--kd-navy #1e293b` · `--kd-dark #0f172a` · tipografía Inter.
 
+## Sesiones en paralelo (Claude Code / Gemini Antigravity / terminal manual)
+
+Varias sesiones de Claude Code y Gemini Antigravity trabajan sobre las mismas
+copias de trabajo de `~/Dev`, esta incluida. Antes de tocar nada:
+`~/Dev/scripts/sesion estado .`. Al empezar: `sesion tomar . "qué vas a
+hacer"`. Al terminar: `sesion soltar .`. No bloquea — es un aviso — pero si el
+marcador es ajeno, mirá `git log --oneline -5` y `git status` antes de cualquier
+`reset`/checkout, y commiteá siempre con `git commit --only -- <rutas>` (el índice
+es compartido). Detalle y motivo en `~/Dev/CLAUDE.md`.
+
 ## Desarrollo
 
     composer install
